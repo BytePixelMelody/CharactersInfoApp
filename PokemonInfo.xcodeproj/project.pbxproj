@@ -351,6 +351,7 @@
 				DEVELOPMENT_TEAM = 3NTG39P2L6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PokemonInfo/Resourses/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pokemon Info";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Welcome;
@@ -379,6 +380,7 @@
 				DEVELOPMENT_TEAM = 3NTG39P2L6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PokemonInfo/Resourses/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pokemon Info";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Welcome;
