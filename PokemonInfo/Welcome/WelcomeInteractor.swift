@@ -7,7 +7,7 @@
 
 import Foundation
 
-// works with data services
+// interactor works with data services
 protocol WelcomeInteractorProtocol {
     func loadDate()
     func loadWeather()
@@ -15,9 +15,13 @@ protocol WelcomeInteractorProtocol {
 
 class WelcomeInteractor {
     
+    // MARK: Public Properties
+    
     weak var presenter: WelcomePresenterProtocol?
     let dataService: DateService
     let weatherService: WeatherService
+    
+    // MARK: Initialisers
     
     init(dataService: DateService, weatherService: WeatherService) {
         self.dataService = dataService
@@ -26,7 +30,11 @@ class WelcomeInteractor {
     
 }
 
+// MARK: - WelcomeInteractorProtocol
+
 extension WelcomeInteractor: WelcomeInteractorProtocol {
+    
+    // MARK: Public Methods
     
     func loadDate() {
         dataService.getDate { [weak self] date in

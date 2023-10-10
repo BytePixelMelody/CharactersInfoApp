@@ -14,10 +14,16 @@ protocol WelcomeViewProtocol: AnyObject {
 
 class WelcomeViewController: UIViewController {
     
+    // MARK: IBOutlet
+    
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var temperatureLabel: UILabel!
     
+    // MARK: Public Properties
+    
     var presenter: WelcomePresenterProtocol?
+    
+    // MARK: UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +33,11 @@ class WelcomeViewController: UIViewController {
 
 }
 
+// MARK: - WelcomeViewProtocol
+
 extension WelcomeViewController: WelcomeViewProtocol {
+    
+    // MARK: Public Methods
     
     func showDate(date: String) {
         DispatchQueue.main.async { [weak self] in

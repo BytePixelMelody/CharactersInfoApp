@@ -7,7 +7,11 @@
 
 import Foundation
 
+// TODO: - Protocol here
+
 class WeatherService {
+    
+    // MARK: Public Methods
     
     func getWeather(completion: @escaping (Int) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

@@ -7,7 +7,11 @@
 
 import Foundation
 
+// TODO: - Protocol here
+
 class DateService {
+    
+    // MARK: Public Methods
     
     func getDate(completion: @escaping (Date) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

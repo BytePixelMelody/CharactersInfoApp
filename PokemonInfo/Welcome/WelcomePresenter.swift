@@ -15,9 +15,13 @@ protocol WelcomePresenterProtocol: AnyObject {
 
 class WelcomePresenter {
     
+    // MARK: Public Properties
+    
     weak var view: WelcomeViewProtocol?
     let router: WelcomeRouterProtocol
     let interactor: WelcomeInteractorProtocol
+    
+    // MARK: Initialisers
     
     init(router: WelcomeRouterProtocol, interactor: WelcomeInteractorProtocol) {
         self.router = router
@@ -26,7 +30,11 @@ class WelcomePresenter {
     
 }
 
+// MARK: - WelcomePresenterProtocol
+
 extension WelcomePresenter: WelcomePresenterProtocol {
+    
+    // MARK: Public Methods
     
     func viewDidLoaded() {
         interactor.loadDate()

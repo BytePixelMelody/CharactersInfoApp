@@ -13,9 +13,13 @@ protocol WelcomeRouterProtocol: AnyObject {
 
 class WelcomeRouter {
     
+    // MARK: Public Properties
+    
     weak var presenter: WelcomePresenter?
     
 }
+
+// MARK: - WelcomeRouterProtocol
 
 extension WelcomeRouter: WelcomeRouterProtocol {
     
