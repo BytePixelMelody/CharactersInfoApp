@@ -7,9 +7,11 @@
 
 import Foundation
 
-// TODO: - Protocol here
+protocol DateServiceProtocol {
+    func getDate(completion: @escaping (Date) -> Void)
+}
 
-class DateService {
+class DateService: DateServiceProtocol {
     
     // MARK: Public Methods
     

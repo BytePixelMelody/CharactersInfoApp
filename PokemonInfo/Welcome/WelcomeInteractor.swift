@@ -18,8 +18,8 @@ class WelcomeInteractor {
     // MARK: Public Properties
     
     weak var presenter: WelcomePresenterProtocol?
-    let dataService: DateService
-    let weatherService: WeatherService
+    let dataService: DateServiceProtocol
+    let weatherService: WeatherServiceProtocol
     
     // MARK: Initialisers
     
