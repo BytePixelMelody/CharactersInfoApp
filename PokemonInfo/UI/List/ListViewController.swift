@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  PokemonInfo
 //
-//  Created by Vyacheslav on 09.10.2023.
+//  Created by Vyacheslav on 10.10.2023.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ protocol ListViewProtocol: AnyObject {
     func showWeather(temperature: String)
 }
 
-class ListViewController: UIViewController {
+final class ListViewController: UIViewController {
     
     // MARK: IBOutlet
     
@@ -36,7 +36,7 @@ class ListViewController: UIViewController {
     @IBAction func didTapInfoButton(_ sender: UIButton) {
         presenter?.didTapDetails()
     }
-    
+     
 }
 
 // MARK: - ListViewProtocol

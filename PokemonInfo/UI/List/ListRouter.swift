@@ -12,16 +12,16 @@ protocol ListRouterProtocol: AnyObject {
     func openDetails(for temperature: Int)
 }
 
-class ListRouter {
+final class ListRouter {
     
     // MARK: Types
 
     enum ListRouterError: LocalizedError {
-        case navigationControllerNotFound
+        case navControllerNotFound
 
         var errorDescription: String? {
             switch self {
-            case .navigationControllerNotFound:
+            case .navControllerNotFound:
                 return "UINavigationController not found"
             }
         }
@@ -43,9 +43,10 @@ extension ListRouter: ListRouterProtocol {
     
     func openDetails(for temperature: Int) {
         guard let navigationController = viewController?.navigationController else {
-            logger.error("\(ListRouterError.navigationControllerNotFound.localizedDescription, privacy: .public)")
+            logger.error("\(ListRouterError.navControllerNotFound.localizedDescription, privacy: .public)")
             return
         }
+        
         let detailVC = DetailModuleBuilder.build(temperature: temperature)
         navigationController.pushViewController(detailVC, animated: true)
     }

@@ -19,12 +19,14 @@
 		112B49BC2AD5470900E54E5B /* ListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49BB2AD5470900E54E5B /* ListRouter.swift */; };
 		112B49BE2AD5474400E54E5B /* ListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49BD2AD5474400E54E5B /* ListInteractor.swift */; };
 		112B49C02AD5550800E54E5B /* ListModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49BF2AD5550800E54E5B /* ListModuleBuilder.swift */; };
-		11557B7F2AD6965C0050EDFF /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11557B7E2AD6965C0050EDFF /* Detail.storyboard */; };
 		11557B852AD6995B0050EDFF /* DetailModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B802AD6995B0050EDFF /* DetailModuleBuilder.swift */; };
 		11557B862AD6995B0050EDFF /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B812AD6995B0050EDFF /* DetailPresenter.swift */; };
 		11557B872AD6995B0050EDFF /* DetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B822AD6995B0050EDFF /* DetailRouter.swift */; };
 		11557B882AD6995B0050EDFF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B832AD6995B0050EDFF /* DetailViewController.swift */; };
 		11557B892AD6995B0050EDFF /* DetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B842AD6995B0050EDFF /* DetailInteractor.swift */; };
+		11557B8F2AD7351D0050EDFF /* UIScrollView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */; };
+		11557B902AD7351D0050EDFF /* UIImageView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */; };
+		11557B912AD7351D0050EDFF /* UIStackView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,12 +44,14 @@
 		112B49BB2AD5470900E54E5B /* ListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouter.swift; sourceTree = "<group>"; };
 		112B49BD2AD5474400E54E5B /* ListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInteractor.swift; sourceTree = "<group>"; };
 		112B49BF2AD5550800E54E5B /* ListModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModuleBuilder.swift; sourceTree = "<group>"; };
-		11557B7E2AD6965C0050EDFF /* Detail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
 		11557B802AD6995B0050EDFF /* DetailModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModuleBuilder.swift; sourceTree = "<group>"; };
 		11557B812AD6995B0050EDFF /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		11557B822AD6995B0050EDFF /* DetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRouter.swift; sourceTree = "<group>"; };
 		11557B832AD6995B0050EDFF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		11557B842AD6995B0050EDFF /* DetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInteractor.swift; sourceTree = "<group>"; };
+		11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+make.swift"; sourceTree = "<group>"; };
+		11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+make.swift"; sourceTree = "<group>"; };
+		11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+make.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,11 +84,11 @@
 		112B499C2AD4606100E54E5B /* PokemonInfo */ = {
 			isa = PBXGroup;
 			children = (
-				112B49B82AD5429800E54E5B /* List */,
-				112B49C12AD67ED700E54E5B /* Detail */,
+				11557B8A2AD734770050EDFF /* UI */,
 				112B49B32AD53E7100E54E5B /* API */,
-				112B49B12AD53DA100E54E5B /* Application */,
+				11557B8B2AD734D50050EDFF /* Extentions */,
 				112B49B22AD53DC900E54E5B /* Resourses */,
+				112B49B12AD53DA100E54E5B /* Application */,
 			);
 			path = PokemonInfo;
 			sourceTree = "<group>";
@@ -133,7 +137,6 @@
 		112B49C12AD67ED700E54E5B /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				11557B7E2AD6965C0050EDFF /* Detail.storyboard */,
 				11557B832AD6995B0050EDFF /* DetailViewController.swift */,
 				11557B812AD6995B0050EDFF /* DetailPresenter.swift */,
 				11557B842AD6995B0050EDFF /* DetailInteractor.swift */,
@@ -141,6 +144,25 @@
 				11557B802AD6995B0050EDFF /* DetailModuleBuilder.swift */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		11557B8A2AD734770050EDFF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				112B49B82AD5429800E54E5B /* List */,
+				112B49C12AD67ED700E54E5B /* Detail */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		11557B8B2AD734D50050EDFF /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */,
+				11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */,
+				11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */,
+			);
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,7 +226,6 @@
 				112B49AA2AD4606200E54E5B /* LaunchScreen.storyboard in Resources */,
 				112B49A72AD4606200E54E5B /* Assets.xcassets in Resources */,
 				112B49A52AD4606100E54E5B /* List.storyboard in Resources */,
-				11557B7F2AD6965C0050EDFF /* Detail.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,11 +238,14 @@
 			files = (
 				11557B882AD6995B0050EDFF /* DetailViewController.swift in Sources */,
 				112B49B72AD53EAE00E54E5B /* WeatherService.swift in Sources */,
+				11557B912AD7351D0050EDFF /* UIStackView+make.swift in Sources */,
 				112B49BE2AD5474400E54E5B /* ListInteractor.swift in Sources */,
 				112B49BA2AD5453500E54E5B /* ListPresenter.swift in Sources */,
 				112B49A22AD4606100E54E5B /* ListViewController.swift in Sources */,
 				11557B862AD6995B0050EDFF /* DetailPresenter.swift in Sources */,
+				11557B902AD7351D0050EDFF /* UIImageView+make.swift in Sources */,
 				112B499E2AD4606100E54E5B /* AppDelegate.swift in Sources */,
+				11557B8F2AD7351D0050EDFF /* UIScrollView+make.swift in Sources */,
 				112B49C02AD5550800E54E5B /* ListModuleBuilder.swift in Sources */,
 				112B49BC2AD5470900E54E5B /* ListRouter.swift in Sources */,
 				112B49A02AD4606100E54E5B /* SceneDelegate.swift in Sources */,

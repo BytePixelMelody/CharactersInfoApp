@@ -11,7 +11,7 @@ protocol DetailInteractorProtocol: AnyObject {
     func getImageForTemperature() -> UIImage?
 }
 
-class DetailInteractor {
+final class DetailInteractor {
     
     // MARK: Public Properties
     

@@ -2,12 +2,12 @@
 //  SceneDelegate.swift
 //  PokemonInfo
 //
-//  Created by Vyacheslav on 09.10.2023.
+//  Created by Vyacheslav on 10.10.2023.
 //
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // MARK: Public Properties
     

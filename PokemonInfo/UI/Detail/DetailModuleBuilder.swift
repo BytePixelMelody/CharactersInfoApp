@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailModuleBuilder {
+final class DetailModuleBuilder {
     
     // MARK: Static Methods
     
@@ -19,8 +19,7 @@ class DetailModuleBuilder {
         
         let presenter = DetailPresenter(interactor: interactor, router: router)
         
-        let storyboard = UIStoryboard(name: "Detail", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "Detail") as DetailViewController
+        let viewController = DetailViewController()
         
         presenter.view  = viewController
         router.viewController = viewController

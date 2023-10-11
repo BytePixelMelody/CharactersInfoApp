@@ -9,7 +9,7 @@ protocol DetailPresenterProtocol: AnyObject {
     func viewDidLoaded()
 }
 
-class DetailPresenter {
+final class DetailPresenter {
     
     // MARK: Public Properties
     

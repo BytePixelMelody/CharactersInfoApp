@@ -13,7 +13,7 @@ protocol ListInteractorProtocol {
     func loadWeather()
 }
 
-class ListInteractor {
+final class ListInteractor {
     
     // MARK: Public Properties
     
