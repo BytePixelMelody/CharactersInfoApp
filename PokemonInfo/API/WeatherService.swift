@@ -7,9 +7,11 @@
 
 import Foundation
 
-// TODO: - Protocol here
+protocol WeatherServiceProtocol {
+    func getWeather(completion: @escaping (Int) -> Void)
+}
 
-class WeatherService {
+class WeatherService: WeatherServiceProtocol {
     
     // MARK: Public Methods
     
