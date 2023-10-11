@@ -1,25 +1,29 @@
 //
-//  WelcomeInteractor.swift
+//  ListInteractor.swift
 //  PokemonInfo
 //
 //  Created by Vyacheslav on 10.10.2023.
 //
 
-import Foundation
-
 // interactor works with data services
-protocol WelcomeInteractorProtocol {
+protocol ListInteractorProtocol {
+    var currentTemperature: Int { get }
+
     func loadDate()
     func loadWeather()
 }
 
-class WelcomeInteractor {
+class ListInteractor {
     
     // MARK: Public Properties
     
-    weak var presenter: WelcomePresenterProtocol?
-    let dataService: DateServiceProtocol
-    let weatherService: WeatherServiceProtocol
+    weak var presenter: ListPresenterProtocol?
+    
+    // MARK: Private Properties
+    
+    private let dataService: DateServiceProtocol
+    private let weatherService: WeatherServiceProtocol
+    private var temperature = 0
     
     // MARK: Initialisers
     
@@ -30,9 +34,15 @@ class WelcomeInteractor {
     
 }
 
-// MARK: - WelcomeInteractorProtocol
+// MARK: - ListInteractorProtocol
 
-extension WelcomeInteractor: WelcomeInteractorProtocol {
+extension ListInteractor: ListInteractorProtocol {
+    
+    // MARK: Public Properties
+    
+    var currentTemperature: Int {
+        temperature
+    }
     
     // MARK: Public Methods
     
@@ -45,6 +55,7 @@ extension WelcomeInteractor: WelcomeInteractorProtocol {
     func loadWeather() {
         weatherService.getWeather { [weak self] temperature in
             self?.presenter?.didLoad(temperature: temperature)
+            self?.temperature = temperature
         }
     }
     

@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol WelcomeViewProtocol: AnyObject {
+protocol ListViewProtocol: AnyObject {
     func showDate(date: String)
     func showWeather(temperature: String)
 }
 
-class WelcomeViewController: UIViewController {
+class ListViewController: UIViewController {
     
     // MARK: IBOutlet
     
@@ -21,7 +21,7 @@ class WelcomeViewController: UIViewController {
     
     // MARK: Public Properties
     
-    var presenter: WelcomePresenterProtocol?
+    var presenter: ListPresenterProtocol?
     
     // MARK: UIViewController
 
@@ -30,12 +30,18 @@ class WelcomeViewController: UIViewController {
 
         presenter?.viewDidLoaded()
     }
-
+    
+    // MARK: IBAction
+    
+    @IBAction func didTapInfoButton(_ sender: UIButton) {
+        presenter?.didTapDetails()
+    }
+    
 }
 
-// MARK: - WelcomeViewProtocol
+// MARK: - ListViewProtocol
 
-extension WelcomeViewController: WelcomeViewProtocol {
+extension ListViewController: ListViewProtocol {
     
     // MARK: Public Methods
     

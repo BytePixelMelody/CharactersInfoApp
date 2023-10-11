@@ -1,5 +1,5 @@
 //
-//  WelcomePresenter.swift
+//  ListPresenter.swift
 //  PokemonInfo
 //
 //  Created by Vyacheslav on 10.10.2023.
@@ -7,33 +7,34 @@
 
 import Foundation
 
-protocol WelcomePresenterProtocol: AnyObject {
+protocol ListPresenterProtocol: AnyObject {
     func viewDidLoaded()
     func didLoad(date: String?)
     func didLoad(temperature: Int?)
+    func didTapDetails()
 }
 
-class WelcomePresenter {
+class ListPresenter {
     
     // MARK: Public Properties
     
-    weak var view: WelcomeViewProtocol?
-    let router: WelcomeRouterProtocol
-    let interactor: WelcomeInteractorProtocol
+    weak var view: ListViewProtocol?
+    let router: ListRouterProtocol
+    let interactor: ListInteractorProtocol
     
     // MARK: Initialisers
     
-    init(router: WelcomeRouterProtocol, interactor: WelcomeInteractorProtocol) {
+    init(router: ListRouterProtocol, interactor: ListInteractorProtocol) {
         self.router = router
         self.interactor = interactor
     }
     
 }
 
-// MARK: - WelcomePresenterProtocol
+// MARK: - ListPresenterProtocol
 
-extension WelcomePresenter: WelcomePresenterProtocol {
-    
+extension ListPresenter: ListPresenterProtocol {
+
     // MARK: Public Methods
     
     func viewDidLoaded() {
@@ -55,6 +56,11 @@ extension WelcomePresenter: WelcomePresenterProtocol {
             return
         }
         view?.showWeather(temperature: temperature.description)
+    }
+    
+    func didTapDetails() {
+        let temperature = interactor.currentTemperature
+        router.openDetails(for: temperature)
     }
     
 }

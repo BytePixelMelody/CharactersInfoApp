@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Welcome View Controller-->
+        <!--List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="WelcomeViewController" id="BYZ-38-t0r" customClass="WelcomeViewController" customModule="PokemonInfo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListViewController" id="BYZ-38-t0r" customClass="ListViewController" customModule="PokemonInfo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,10 +34,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pTy-lI-aX3">
+                                <rect key="frame" x="147" y="735" width="99" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Show info"/>
+                                <connections>
+                                    <action selector="didTapInfoButton:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="xjb-jo-RCO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pTy-lI-aX3" secondAttribute="bottom" constant="48" id="8wU-JT-JlU"/>
+                            <constraint firstItem="pTy-lI-aX3" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Dty-4I-VB4"/>
                             <constraint firstItem="6h0-C1-FPk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="48" id="KfU-8Q-qsN"/>
                             <constraint firstItem="AUC-DB-9Cx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ahs-58-2wV"/>
                             <constraint firstItem="6h0-C1-FPk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ij6-Mp-eVH"/>
