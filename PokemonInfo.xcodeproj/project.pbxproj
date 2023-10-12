@@ -27,6 +27,7 @@
 		11557B8F2AD7351D0050EDFF /* UIScrollView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */; };
 		11557B902AD7351D0050EDFF /* UIImageView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */; };
 		11557B912AD7351D0050EDFF /* UIStackView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */; };
+		11557B932AD73ED30050EDFF /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B922AD73ED30050EDFF /* WebService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+make.swift"; sourceTree = "<group>"; };
 		11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+make.swift"; sourceTree = "<group>"; };
 		11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+make.swift"; sourceTree = "<group>"; };
+		11557B922AD73ED30050EDFF /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				11557B8A2AD734770050EDFF /* UI */,
-				112B49B32AD53E7100E54E5B /* API */,
+				112B49B32AD53E7100E54E5B /* Services */,
 				11557B8B2AD734D50050EDFF /* Extentions */,
 				112B49B22AD53DC900E54E5B /* Resourses */,
 				112B49B12AD53DA100E54E5B /* Application */,
@@ -112,13 +114,14 @@
 			path = Resourses;
 			sourceTree = "<group>";
 		};
-		112B49B32AD53E7100E54E5B /* API */ = {
+		112B49B32AD53E7100E54E5B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				11557B922AD73ED30050EDFF /* WebService.swift */,
 				112B49B42AD53E7F00E54E5B /* DateService.swift */,
 				112B49B62AD53EAE00E54E5B /* WeatherService.swift */,
 			);
-			path = API;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		112B49B82AD5429800E54E5B /* List */ = {
@@ -236,6 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11557B932AD73ED30050EDFF /* WebService.swift in Sources */,
 				11557B882AD6995B0050EDFF /* DetailViewController.swift in Sources */,
 				112B49B72AD53EAE00E54E5B /* WeatherService.swift in Sources */,
 				11557B912AD7351D0050EDFF /* UIStackView+make.swift in Sources */,
