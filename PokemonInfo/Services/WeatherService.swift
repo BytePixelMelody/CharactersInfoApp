@@ -11,7 +11,7 @@ protocol WeatherServiceProtocol {
     func getWeather(completion: @escaping (Int) -> Void)
 }
 
-class WeatherService: WeatherServiceProtocol {
+final class WeatherService: WeatherServiceProtocol {
     
     // MARK: Public Methods
     

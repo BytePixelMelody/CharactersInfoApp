@@ -11,7 +11,7 @@ protocol DetailRouterProtocol {
     
 }
 
-class DetailRouter {
+final class DetailRouter {
     
     // MARK: Public Properties
     

@@ -11,7 +11,7 @@ protocol DateServiceProtocol {
     func getDate(completion: @escaping (Date) -> Void)
 }
 
-class DateService: DateServiceProtocol {
+final class DateService: DateServiceProtocol {
     
     // MARK: Public Methods
     

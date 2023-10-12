@@ -14,7 +14,7 @@ protocol ListPresenterProtocol: AnyObject {
     func didTapDetails()
 }
 
-class ListPresenter {
+final class ListPresenter {
     
     // MARK: Public Properties
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListModuleBuilder {
+final class ListModuleBuilder {
     
     // MARK: Static Methods
     
