@@ -15,7 +15,7 @@ final class WebService: WebServiceProtocol {
 
     // MARK: Types
 
-    enum WebServiceError: LocalizedError {
+    enum Errors: LocalizedError {
         case invalidServerResponse(String)
         case invalidUrlString(String)
 
@@ -33,13 +33,13 @@ final class WebService: WebServiceProtocol {
 
     func getApiValue<T: Codable>(from url: String) async throws -> T {
         guard let url = URL(string: url) else {
-            throw WebServiceError.invalidUrlString(url)
+            throw Errors.invalidUrlString(url)
         }
 
         let (data, response) = try await URLSession.shared.data(from: url)
 
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw WebServiceError.invalidServerResponse(response.description)
+            throw Errors.invalidServerResponse(response.description)
         }
 
         return try JSONDecoder().decode(T.self, from: data)

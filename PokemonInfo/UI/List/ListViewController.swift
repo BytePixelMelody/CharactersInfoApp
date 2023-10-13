@@ -8,8 +8,7 @@
 import UIKit
 
 protocol ListViewProtocol: AnyObject {
-    func showDate(date: String)
-    func showWeather(temperature: String)
+    func showCount(temperature: String)
 }
 
 final class ListViewController: UIViewController {
@@ -28,7 +27,9 @@ final class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        presenter?.viewDidLoaded()
+        Task {
+            await presenter?.viewDidLoaded()
+        }
     }
     
     // MARK: IBAction
@@ -45,16 +46,8 @@ extension ListViewController: ListViewProtocol {
     
     // MARK: Public Methods
     
-    func showDate(date: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dateLabel.text = date
-        }
-    }
-    
-    func showWeather(temperature: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.temperatureLabel.text = temperature
-        }
+    func showCount(temperature: String) {
+        temperatureLabel.text = temperature
     }
 
 }
