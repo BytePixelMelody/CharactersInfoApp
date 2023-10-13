@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailInteractorProtocol: AnyObject {
-    func getImageForTemperature() -> UIImage?
+    func getPokemonDetails() async throws
 }
 
 final class DetailInteractor {
@@ -19,12 +19,14 @@ final class DetailInteractor {
     
     // MARK: Private Properties
     
-    private let temperature: Int
+    private let webService: WebServiceProtocol
+    private let pokemonURLString: String
     
     // MARK: Initialisers
     
-    init(temperature: Int) {
-        self.temperature = temperature
+    init(webService: WebServiceProtocol, urlString: String) {
+        self.webService = webService
+        self.pokemonURLString = urlString
     }
     
 }
@@ -35,17 +37,19 @@ extension DetailInteractor: DetailInteractorProtocol {
     
     // MARK: Public Methods
     
-    func getImageForTemperature() -> UIImage? {
-        switch temperature {
-        case -30..<0:
-            return UIImage(systemName: "snowflake")
-        case 0..<10:
-            return UIImage(systemName: "cloud")
-        case 11...30:
-            return UIImage(systemName: "sun.max")
-        default:
-            return nil
-        }
+    func getPokemonDetails() async throws {
+        async let pokemonDetailsAPI: PokemonDetailsAPI = webService.getApiValue(from: pokemonURLString)
+        
+        let imageURL = try await pokemonDetailsAPI.sprites.frontDefault
+        async let imageData: Data = webService.getApiValue(from: imageURL)
+        
+        let pokemonDetails = PokemonDetails(
+            pokemonURLString: pokemonURLString,
+            pokemonDetailsAPI: try await pokemonDetailsAPI,
+            imageData: try await imageData
+        )
+        
+        await presenter?.loadedPokemonDetails(pokemonDetails: pokemonDetails)
     }
     
 }

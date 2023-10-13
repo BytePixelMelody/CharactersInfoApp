@@ -7,10 +7,8 @@
 
 // interactor works with data services
 protocol ListInteractorProtocol {
-    var currentTemperature: Int { get }
-
-    func loadDate()
-    func loadWeather()
+    var loadedList: [PokemonAPI] { get }
+    func getListPage() async throws
 }
 
 final class ListInteractor {
@@ -21,15 +19,14 @@ final class ListInteractor {
     
     // MARK: Private Properties
     
-    private let dataService: DateServiceProtocol
-    private let weatherService: WeatherServiceProtocol
-    private var temperature = 0
+    private let webService: WebServiceProtocol
+    private var list: [PokemonAPI] = []
+    private var currentPageURL = Settings.startUrl
     
     // MARK: Initialisers
     
-    init(dataService: DateService, weatherService: WeatherService) {
-        self.dataService = dataService
-        self.weatherService = weatherService
+    init(webService: WebServiceProtocol) {
+        self.webService = webService
     }
     
 }
@@ -40,23 +37,16 @@ extension ListInteractor: ListInteractorProtocol {
     
     // MARK: Public Properties
     
-    var currentTemperature: Int {
-        temperature
+    var loadedList: [PokemonAPI] {
+        list
     }
     
     // MARK: Public Methods
     
-    func loadDate() {
-        dataService.getDate { [weak self] date in
-            self?.presenter?.didLoad(date: date.description)
-        }
-    }
-    
-    func loadWeather() {
-        weatherService.getWeather { [weak self] temperature in
-            self?.presenter?.didLoad(temperature: temperature)
-            self?.temperature = temperature
-        }
+    func getListPage() async throws {
+        async let receivedList: ListAPI = webService.getApiValue(from: currentPageURL)
+        list.append(contentsOf: try await receivedList.results)
+        await presenter?.loadedListPage(list: list)
     }
     
 }

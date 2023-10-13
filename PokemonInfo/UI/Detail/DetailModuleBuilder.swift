@@ -12,8 +12,8 @@ final class DetailModuleBuilder {
     
     // MARK: Static Methods
     
-    static func build(temperature: Int) -> DetailViewController {
-        let interactor = DetailInteractor(temperature: temperature)
+    static func build(webService: WebServiceProtocol, urlString: String) -> DetailViewController {
+        let interactor = DetailInteractor(webService: webService, urlString: urlString)
         
         let router = DetailRouter()
         

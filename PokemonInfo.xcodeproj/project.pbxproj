@@ -13,8 +13,6 @@
 		112B49A52AD4606100E54E5B /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112B49A32AD4606100E54E5B /* List.storyboard */; };
 		112B49A72AD4606200E54E5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112B49A62AD4606200E54E5B /* Assets.xcassets */; };
 		112B49AA2AD4606200E54E5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112B49A82AD4606200E54E5B /* LaunchScreen.storyboard */; };
-		112B49B52AD53E7F00E54E5B /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49B42AD53E7F00E54E5B /* DateService.swift */; };
-		112B49B72AD53EAE00E54E5B /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49B62AD53EAE00E54E5B /* WeatherService.swift */; };
 		112B49BA2AD5453500E54E5B /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49B92AD5453500E54E5B /* ListPresenter.swift */; };
 		112B49BC2AD5470900E54E5B /* ListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49BB2AD5470900E54E5B /* ListRouter.swift */; };
 		112B49BE2AD5474400E54E5B /* ListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49BD2AD5474400E54E5B /* ListInteractor.swift */; };
@@ -24,10 +22,12 @@
 		11557B872AD6995B0050EDFF /* DetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B822AD6995B0050EDFF /* DetailRouter.swift */; };
 		11557B882AD6995B0050EDFF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B832AD6995B0050EDFF /* DetailViewController.swift */; };
 		11557B892AD6995B0050EDFF /* DetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B842AD6995B0050EDFF /* DetailInteractor.swift */; };
-		11557B8F2AD7351D0050EDFF /* UIScrollView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */; };
 		11557B902AD7351D0050EDFF /* UIImageView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */; };
 		11557B912AD7351D0050EDFF /* UIStackView+make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */; };
 		11557B932AD73ED30050EDFF /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B922AD73ED30050EDFF /* WebService.swift */; };
+		11557B952AD7BF510050EDFF /* ListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B942AD7BF510050EDFF /* ListEntity.swift */; };
+		11557B972AD7C22A0050EDFF /* DetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B962AD7C22A0050EDFF /* DetailEntity.swift */; };
+		11557B992AD810150050EDFF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11557B982AD810140050EDFF /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +39,6 @@
 		112B49A62AD4606200E54E5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		112B49A92AD4606200E54E5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		112B49AB2AD4606200E54E5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		112B49B42AD53E7F00E54E5B /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
-		112B49B62AD53EAE00E54E5B /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		112B49B92AD5453500E54E5B /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		112B49BB2AD5470900E54E5B /* ListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouter.swift; sourceTree = "<group>"; };
 		112B49BD2AD5474400E54E5B /* ListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInteractor.swift; sourceTree = "<group>"; };
@@ -50,10 +48,12 @@
 		11557B822AD6995B0050EDFF /* DetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRouter.swift; sourceTree = "<group>"; };
 		11557B832AD6995B0050EDFF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		11557B842AD6995B0050EDFF /* DetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInteractor.swift; sourceTree = "<group>"; };
-		11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+make.swift"; sourceTree = "<group>"; };
 		11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+make.swift"; sourceTree = "<group>"; };
 		11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+make.swift"; sourceTree = "<group>"; };
 		11557B922AD73ED30050EDFF /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
+		11557B942AD7BF510050EDFF /* ListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEntity.swift; sourceTree = "<group>"; };
+		11557B962AD7C22A0050EDFF /* DetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEntity.swift; sourceTree = "<group>"; };
+		11557B982AD810140050EDFF /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +107,7 @@
 		112B49B22AD53DC900E54E5B /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				11557B982AD810140050EDFF /* Settings.swift */,
 				112B49A62AD4606200E54E5B /* Assets.xcassets */,
 				112B49A82AD4606200E54E5B /* LaunchScreen.storyboard */,
 				112B49AB2AD4606200E54E5B /* Info.plist */,
@@ -118,8 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				11557B922AD73ED30050EDFF /* WebService.swift */,
-				112B49B42AD53E7F00E54E5B /* DateService.swift */,
-				112B49B62AD53EAE00E54E5B /* WeatherService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -129,8 +128,9 @@
 			children = (
 				112B49A32AD4606100E54E5B /* List.storyboard */,
 				112B49A12AD4606100E54E5B /* ListViewController.swift */,
-				112B49B92AD5453500E54E5B /* ListPresenter.swift */,
 				112B49BD2AD5474400E54E5B /* ListInteractor.swift */,
+				112B49B92AD5453500E54E5B /* ListPresenter.swift */,
+				11557B942AD7BF510050EDFF /* ListEntity.swift */,
 				112B49BB2AD5470900E54E5B /* ListRouter.swift */,
 				112B49BF2AD5550800E54E5B /* ListModuleBuilder.swift */,
 			);
@@ -141,8 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				11557B832AD6995B0050EDFF /* DetailViewController.swift */,
-				11557B812AD6995B0050EDFF /* DetailPresenter.swift */,
 				11557B842AD6995B0050EDFF /* DetailInteractor.swift */,
+				11557B812AD6995B0050EDFF /* DetailPresenter.swift */,
+				11557B962AD7C22A0050EDFF /* DetailEntity.swift */,
 				11557B822AD6995B0050EDFF /* DetailRouter.swift */,
 				11557B802AD6995B0050EDFF /* DetailModuleBuilder.swift */,
 			);
@@ -162,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				11557B8D2AD7351D0050EDFF /* UIImageView+make.swift */,
-				11557B8C2AD7351D0050EDFF /* UIScrollView+make.swift */,
 				11557B8E2AD7351D0050EDFF /* UIStackView+make.swift */,
 			);
 			path = Extentions;
@@ -241,22 +241,22 @@
 			files = (
 				11557B932AD73ED30050EDFF /* WebService.swift in Sources */,
 				11557B882AD6995B0050EDFF /* DetailViewController.swift in Sources */,
-				112B49B72AD53EAE00E54E5B /* WeatherService.swift in Sources */,
 				11557B912AD7351D0050EDFF /* UIStackView+make.swift in Sources */,
 				112B49BE2AD5474400E54E5B /* ListInteractor.swift in Sources */,
 				112B49BA2AD5453500E54E5B /* ListPresenter.swift in Sources */,
 				112B49A22AD4606100E54E5B /* ListViewController.swift in Sources */,
 				11557B862AD6995B0050EDFF /* DetailPresenter.swift in Sources */,
 				11557B902AD7351D0050EDFF /* UIImageView+make.swift in Sources */,
+				11557B972AD7C22A0050EDFF /* DetailEntity.swift in Sources */,
 				112B499E2AD4606100E54E5B /* AppDelegate.swift in Sources */,
-				11557B8F2AD7351D0050EDFF /* UIScrollView+make.swift in Sources */,
 				112B49C02AD5550800E54E5B /* ListModuleBuilder.swift in Sources */,
 				112B49BC2AD5470900E54E5B /* ListRouter.swift in Sources */,
 				112B49A02AD4606100E54E5B /* SceneDelegate.swift in Sources */,
+				11557B992AD810150050EDFF /* Settings.swift in Sources */,
 				11557B872AD6995B0050EDFF /* DetailRouter.swift in Sources */,
+				11557B952AD7BF510050EDFF /* ListEntity.swift in Sources */,
 				11557B892AD6995B0050EDFF /* DetailInteractor.swift in Sources */,
 				11557B852AD6995B0050EDFF /* DetailModuleBuilder.swift in Sources */,
-				112B49B52AD53E7F00E54E5B /* DateService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

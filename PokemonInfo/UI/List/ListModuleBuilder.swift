@@ -11,12 +11,10 @@ final class ListModuleBuilder {
     
     // MARK: Static Methods
     
-    static func build() -> ListViewController {
-        let dataService = DateService()
-        let weatherService = WeatherService()
-        let interactor = ListInteractor(dataService: dataService, weatherService: weatherService)
+    static func build(webService: WebServiceProtocol) -> ListViewController {
+        let interactor = ListInteractor(webService: webService)
         
-        let router = ListRouter()
+        let router = ListRouter(webService: webService)
         
         let presenter = ListPresenter(router: router, interactor: interactor)
         
