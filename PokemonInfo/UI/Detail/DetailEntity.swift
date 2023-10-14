@@ -10,12 +10,12 @@ import Foundation
 struct PokemonDetails: Codable {
     let url: String
     let name: String
-    let imageData: Data
+    let imageData: Data?
     let type: String
     let weight: String
     let height: String
     
-    init(pokemonURLString: String, pokemonDetailsAPI: PokemonDetailsAPI, imageData: Data) {
+    init(pokemonURLString: String, pokemonDetailsAPI: PokemonDetailsAPI, imageData: Data?) {
         self.url = pokemonURLString
         self.name = pokemonDetailsAPI.name
         self.imageData = imageData
