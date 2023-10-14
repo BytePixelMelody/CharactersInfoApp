@@ -41,8 +41,13 @@ final class WebService: WebServiceProtocol {
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
             throw Errors.invalidServerResponse(response.description)
         }
-
-        return try JSONDecoder().decode(T.self, from: data)
+        
+        // raw data check
+        // if let string = String(data: data, encoding: .utf8) { print(string) }
+        
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try jsonDecoder.decode(T.self, from: data)
     }
 
 }

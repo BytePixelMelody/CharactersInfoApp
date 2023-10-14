@@ -31,15 +31,6 @@ final class DetailPresenter {
         }
     }
     
-    // MARK: Constants
-    
-    private enum Constants {
-        static let namePrefix = "Name: "
-        static let typePrefix = "Types: "
-        static let weightPrefix = "Weight: "
-        static let heightPrefix = "Height: "
-    }
-    
     // MARK: Public Properties
     
     weak var view: DetailViewProtocol?
@@ -67,7 +58,7 @@ extension DetailPresenter: DetailPresenterProtocol {
     
     func viewDidLoaded() async {
         do {
-            // TODO: check internet here and trow
+            // TODO: check internet here and throw
             try await interactor.getPokemonDetails()
         } catch {
             logger.error("\(error, privacy: .public)")
@@ -77,14 +68,17 @@ extension DetailPresenter: DetailPresenterProtocol {
     
     @MainActor
     func loadedPokemonDetails(pokemonDetails: PokemonDetails) async {
-        let image = UIImage(data: pokemonDetails.imageData)
+        var image: UIImage? = nil
+        if let imageData = pokemonDetails.imageData {
+            image = UIImage(data: imageData)
+        }
         
         view?.showDetail(
-            name: Constants.namePrefix + pokemonDetails.name,
+            name: pokemonDetails.name,
             image: image,
-            type: Constants.typePrefix + pokemonDetails.type,
-            weight: Constants.weightPrefix + pokemonDetails.weight,
-            height: Constants.heightPrefix + pokemonDetails.height
+            type: pokemonDetails.type,
+            weight: pokemonDetails.weight,
+            height: pokemonDetails.height
         )
     }
     

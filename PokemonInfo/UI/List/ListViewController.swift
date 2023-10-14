@@ -8,15 +8,14 @@
 import UIKit
 
 protocol ListViewProtocol: AnyObject {
-    func showCount(temperature: String)
+    func showCount(count: String)
 }
 
 final class ListViewController: UIViewController {
     
     // MARK: IBOutlet
     
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var temperatureLabel: UILabel!
+    @IBOutlet var countLabel: UILabel!
     
     // MARK: Public Properties
     
@@ -46,8 +45,8 @@ extension ListViewController: ListViewProtocol {
     
     // MARK: Public Methods
     
-    func showCount(temperature: String) {
-        temperatureLabel.text = temperature
+    func showCount(count: String) {
+        countLabel.text = count
     }
 
 }

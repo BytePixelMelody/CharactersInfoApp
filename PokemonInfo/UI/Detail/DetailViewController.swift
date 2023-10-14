@@ -28,6 +28,13 @@ final class DetailViewController: UIViewController {
         static let imageViewContentMode = UIView.ContentMode.scaleAspectFit
         static let imageViewCornerRadius = 3.0
         static let imageViewClipsToBounds = true
+        
+        static let namePrefix = "Name: "
+        static let typePrefix = "Types: "
+        static let weightPrefix = "Weight: "
+        static let weightSuffix = " kg"
+        static let heightMeasurePrefix = "Height: "
+        static let heightMeasureSuffix = " cm"
     }
     
     // MARK: Public Properties
@@ -97,11 +104,11 @@ extension DetailViewController: DetailViewProtocol {
     
     @MainActor
     func showDetail(name: String, image: UIImage?, type: String, weight: String, height: String) {
-        nameLabel.text = name
+        nameLabel.text = Constants.namePrefix + name
         imageView.image = image
-        typeLabel.text = type
-        weightLabel.text = weight
-        heightLabel.text = height
+        typeLabel.text = Constants.typePrefix + type
+        weightLabel.text = Constants.weightPrefix + weight + Constants.weightSuffix
+        heightLabel.text = Constants.heightMeasurePrefix + height + Constants.heightMeasureSuffix
     }
     
 }

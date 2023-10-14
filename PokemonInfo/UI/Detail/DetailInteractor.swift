@@ -38,15 +38,20 @@ extension DetailInteractor: DetailInteractorProtocol {
     // MARK: Public Methods
     
     func getPokemonDetails() async throws {
-        async let pokemonDetailsAPI: PokemonDetailsAPI = webService.getApiValue(from: pokemonURLString)
+        let pokemonDetailsAPI: PokemonDetailsAPI = try await webService.getApiValue(from: pokemonURLString)
         
-        let imageURL = try await pokemonDetailsAPI.sprites.frontDefault
-        async let imageData: Data = webService.getApiValue(from: imageURL)
+        var imageData: Data? = nil
+        if let imageURL = URL(string: pokemonDetailsAPI.sprites.frontDefault),
+            let data = try? Data(contentsOf: imageURL) { //await webService.getApiValue(from: imageURL)
+            imageData = data
+        } else {
+            // TODO: throw error canNotLoadImage
+        }
         
         let pokemonDetails = PokemonDetails(
             pokemonURLString: pokemonURLString,
-            pokemonDetailsAPI: try await pokemonDetailsAPI,
-            imageData: try await imageData
+            pokemonDetailsAPI: pokemonDetailsAPI,
+            imageData: imageData
         )
         
         await presenter?.loadedPokemonDetails(pokemonDetails: pokemonDetails)
