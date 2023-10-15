@@ -12,15 +12,15 @@ struct PokemonDetails: Codable {
     let name: String
     let imageData: Data?
     let type: String
-    let weight: String
+    let weightKg: String
     let height: String
     
     init(pokemonURLString: String, pokemonDetailsAPI: PokemonDetailsAPI, imageData: Data?) {
         self.url = pokemonURLString
-        self.name = pokemonDetailsAPI.name
+        self.name = pokemonDetailsAPI.name.capitalized
         self.imageData = imageData
         self.type = pokemonDetailsAPI.types.map { $0.type.name }.joined(separator: ", ")
-        self.weight = pokemonDetailsAPI.weight.description
+        self.weightKg = (Double(pokemonDetailsAPI.weight) / 1000).description
         self.height = pokemonDetailsAPI.height.description
     }
 }

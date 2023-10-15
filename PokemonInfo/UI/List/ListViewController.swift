@@ -97,6 +97,7 @@ extension ListViewController {
     private func createListCollectionView() -> UICollectionView {
         let collectionViewLayout = createListLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
         return collectionView
     }
@@ -104,7 +105,7 @@ extension ListViewController {
     private func createListCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> {
         return UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> { cell, indexPath, pokemon in
             var contentConfiguration = UIListContentConfiguration.valueCell()
-            contentConfiguration.text = "\(pokemon.id) \(pokemon.name)"
+            contentConfiguration.text = "\(pokemon.id). \(pokemon.name.capitalized)"
             cell.contentConfiguration = contentConfiguration
             cell.accessories = [.disclosureIndicator()]
         }
@@ -128,6 +129,9 @@ extension ListViewController {
 extension ListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
         switch item {
         case .pokemon(let pokemon):
             presenter?.didTapPokemon(pokemon: pokemon)

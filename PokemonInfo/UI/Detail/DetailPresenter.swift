@@ -81,12 +81,12 @@ extension DetailPresenter: DetailPresenterProtocol {
         if let imageData = pokemonDetails.imageData {
             image = UIImage(data: imageData)
         }
-        
+                
         view?.showDetail(
             name: pokemonDetails.name,
             image: image,
             type: pokemonDetails.type,
-            weight: pokemonDetails.weight,
+            weightKg: pokemonDetails.weightKg,
             height: pokemonDetails.height
         )
     }

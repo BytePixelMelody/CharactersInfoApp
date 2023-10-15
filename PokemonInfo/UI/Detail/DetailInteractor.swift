@@ -42,7 +42,7 @@ extension DetailInteractor: DetailInteractorProtocol {
         
         var imageData: Data? = nil
         if let imageURL = URL(string: pokemonDetailsAPI.sprites.frontDefault),
-            let data = try? Data(contentsOf: imageURL) { //await webService.getApiValue(from: imageURL)
+            let data = try? Data(contentsOf: imageURL) {
             imageData = data
         } else {
             // TODO: throw error canNotLoadImage
