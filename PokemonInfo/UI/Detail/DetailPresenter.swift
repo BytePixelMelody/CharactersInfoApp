@@ -59,7 +59,8 @@ final class DetailPresenter {
 extension DetailPresenter: DetailPresenterProtocol {
     
     // MARK: Public Methods
-    
+    // view calls
+
     func viewDidLoaded() {
         Task {
             do {
@@ -72,6 +73,8 @@ extension DetailPresenter: DetailPresenterProtocol {
         }
     }
     
+    // interactor calls
+
     @MainActor
     func loadedPokemonDetails(pokemonDetails: PokemonDetails) async {
         var image: UIImage? = nil

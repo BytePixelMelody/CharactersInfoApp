@@ -12,7 +12,7 @@ protocol ListPresenterProtocol: AnyObject {
     
     // view calls
     func viewDidLoaded()
-    func didTapDetails() // TODO: remake it
+    func didTapPokemon(pokemon: Pokemon)
     
     // interactor calls
     @MainActor func loadedInitList(list: [Pokemon]) async
@@ -45,6 +45,7 @@ final class ListPresenter {
 extension ListPresenter: ListPresenterProtocol {
 
     // MARK: Public Methods
+    // view calls
     
     func viewDidLoaded() {
         Task {
@@ -58,16 +59,16 @@ extension ListPresenter: ListPresenterProtocol {
         }
     }
     
+    func didTapPokemon(pokemon: Pokemon) {
+        let urlString = pokemon.url
+        router.openDetails(for: urlString)
+    }
+    
+    // interactor calls
+    
     @MainActor
     func loadedInitList(list: [Pokemon]) async {
         view?.initializeSnapshot(with: list)
-    }
-    
-    func didTapDetails() {
-        //        let _ = interactor.loadedList[3]
-        
-        let urlStringFromView = "https://pokeapi.co/api/v2/pokemon/18/"
-        router.openDetails(for: urlStringFromView)
     }
     
 }

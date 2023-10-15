@@ -5,8 +5,6 @@
 //  Created by Vyacheslav on 10.10.2023.
 //
 
-// TODO: - move Tasks to presenters
-
 import UIKit
 
 protocol ListViewProtocol: AnyObject {
@@ -98,7 +96,9 @@ extension ListViewController {
     
     private func createListCollectionView() -> UICollectionView {
         let collectionViewLayout = createListLayout()
-        return UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.delegate = self
+        return collectionView
     }
     
     private func createListCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> {
@@ -121,4 +121,16 @@ extension ListViewController {
         }
     }
     
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        switch item {
+        case .pokemon(let pokemon):
+            presenter?.didTapPokemon(pokemon: pokemon)
+        }
+    }
 }
