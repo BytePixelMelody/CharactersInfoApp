@@ -7,7 +7,7 @@
 
 // interactor works with data services
 protocol ListInteractorProtocol {
-    var loadedList: [PokemonAPI] { get }
+    var loadedList: [Pokemon] { get }
     func getListPage() async throws
 }
 
@@ -20,7 +20,7 @@ final class ListInteractor {
     // MARK: Private Properties
     
     private let webService: WebServiceProtocol
-    private var list: [PokemonAPI] = []
+    private(set) var loadedList: [Pokemon] = []
     private var currentPageURL = Settings.startUrl
     
     // MARK: Initialisers
@@ -35,18 +35,14 @@ final class ListInteractor {
 
 extension ListInteractor: ListInteractorProtocol {
     
-    // MARK: Public Properties
-    
-    var loadedList: [PokemonAPI] {
-        list
-    }
-    
     // MARK: Public Methods
     
     func getListPage() async throws {
-        async let receivedList: ListAPI = webService.getApiValue(from: currentPageURL)
-        list.append(contentsOf: try await receivedList.results)
-        await presenter?.loadedListPage(list: list)
+        let receivedList: ListAPI = try await webService.getApiValue(from: currentPageURL)
+        let pokemonsAPI = receivedList.results
+        let pokemons = pokemonsAPI.compactMap { Pokemon(from: $0) }
+        loadedList.append(contentsOf: pokemons)
+        await presenter?.loadedInitList(list: loadedList)
     }
     
 }
