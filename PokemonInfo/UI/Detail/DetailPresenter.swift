@@ -9,7 +9,11 @@ import UIKit
 import OSLog
 
 protocol DetailPresenterProtocol: AnyObject {
-    func viewDidLoaded() async
+    
+    // view calls
+    func viewDidLoaded()
+    
+    // interactor calls
     @MainActor func loadedPokemonDetails(pokemonDetails: PokemonDetails) async
 }
 
@@ -56,13 +60,15 @@ extension DetailPresenter: DetailPresenterProtocol {
     
     // MARK: Public Methods
     
-    func viewDidLoaded() async {
-        do {
-            // TODO: check internet here and throw
-            try await interactor.getPokemonDetails()
-        } catch {
-            logger.error("\(error, privacy: .public)")
-            // TODO: catch errors here
+    func viewDidLoaded() {
+        Task {
+            do {
+                // TODO: check internet here and throw
+                try await interactor.getPokemonDetails()
+            } catch {
+                logger.error("\(error, privacy: .public)")
+                // TODO: catch errors here
+            }
         }
     }
     

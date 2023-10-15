@@ -8,7 +8,6 @@
 import UIKit
 
 protocol DetailViewProtocol: AnyObject {
-    @MainActor
     func showDetail(name: String, image: UIImage?, type: String, weight: String, height: String)
 }
 
@@ -66,11 +65,8 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Task {
-            await presenter?.viewDidLoaded()
-        }
-        
         initialise()
+        presenter?.viewDidLoaded()
     }
     
     // MARK: Private Methods
@@ -102,7 +98,6 @@ extension DetailViewController: DetailViewProtocol {
     
     // MARK: Public Methods
     
-    @MainActor
     func showDetail(name: String, image: UIImage?, type: String, weight: String, height: String) {
         nameLabel.text = Constants.namePrefix + name
         imageView.image = image

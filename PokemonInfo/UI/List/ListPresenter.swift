@@ -9,9 +9,14 @@ import Foundation
 import OSLog
 
 protocol ListPresenterProtocol: AnyObject {
-    func viewDidLoaded() async
-    @MainActor func loadedInitList(list: [Pokemon]) async
+    
+    // view calls
+    func viewDidLoaded()
     func didTapDetails() // TODO: remake it
+    
+    // interactor calls
+    @MainActor func loadedInitList(list: [Pokemon]) async
+    
 }
 
 final class ListPresenter {
@@ -41,13 +46,15 @@ extension ListPresenter: ListPresenterProtocol {
 
     // MARK: Public Methods
     
-    func viewDidLoaded() async {
-        do {
-            // TODO: check internet here and trow
-            try await interactor.getListPage()
-        } catch {
-            logger.error("\(error, privacy: .public)")
-            // TODO: catch errors
+    func viewDidLoaded() {
+        Task {
+            do {
+                // TODO: check internet here and trow
+                try await interactor.getListPage()
+            } catch {
+                logger.error("\(error, privacy: .public)")
+                // TODO: catch errors
+            }
         }
     }
     

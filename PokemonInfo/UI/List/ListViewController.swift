@@ -5,7 +5,7 @@
 //  Created by Vyacheslav on 10.10.2023.
 //
 
-// TODO: - Manual UI, move Tasks to presenters
+// TODO: - move Tasks to presenters
 
 import UIKit
 
@@ -38,10 +38,7 @@ final class ListViewController: UIViewController {
         super.viewDidLoad()
 
         initialise()
-        
-        Task {
-            await presenter?.viewDidLoaded()
-        }
+        presenter?.viewDidLoaded()
     }
     
     // MARK: Private Methods
