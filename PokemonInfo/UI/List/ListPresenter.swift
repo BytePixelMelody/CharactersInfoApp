@@ -11,7 +11,7 @@ import OSLog
 protocol ListPresenterProtocol: AnyObject {
     func viewDidLoaded() async
     @MainActor 
-    func loadedListPage(list: [PokemonAPI]) async
+    func loadedInitList(list: [Pokemon]) async
     func didTapDetails()
 }
 
@@ -53,8 +53,8 @@ extension ListPresenter: ListPresenterProtocol {
     }
     
     @MainActor
-    func loadedListPage(list: [PokemonAPI]) async {
-        view?.showCount(count: list.count.description)
+    func loadedInitList(list: [Pokemon]) async {
+        view?.initializeSnapshot(with: list)
     }
     
     func didTapDetails() {
