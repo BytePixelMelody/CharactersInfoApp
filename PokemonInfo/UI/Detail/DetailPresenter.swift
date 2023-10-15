@@ -15,6 +15,7 @@ protocol DetailPresenterProtocol: AnyObject {
     
     // interactor calls
     @MainActor func loadedPokemonDetails(pokemonDetails: PokemonDetails) async
+    @MainActor func loadedPokemonImageData(imageData: Data) async
 }
 
 final class DetailPresenter {
@@ -77,18 +78,18 @@ extension DetailPresenter: DetailPresenterProtocol {
 
     @MainActor
     func loadedPokemonDetails(pokemonDetails: PokemonDetails) async {
-        var image: UIImage? = nil
-        if let imageData = pokemonDetails.imageData {
-            image = UIImage(data: imageData)
-        }
-                
-        view?.showDetail(
+        view?.showDetails(
             name: pokemonDetails.name,
-            image: image,
             type: pokemonDetails.type,
             weightKg: pokemonDetails.weightKg,
             height: pokemonDetails.height
         )
+    }
+    
+    @MainActor
+    func loadedPokemonImageData(imageData: Data) async {
+        let image = UIImage(data: imageData)
+        view?.showDetailsImage(image: image)
     }
     
 }

@@ -105,7 +105,7 @@ extension ListViewController {
     private func createListCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> {
         return UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> { cell, indexPath, pokemon in
             var contentConfiguration = UIListContentConfiguration.valueCell()
-            contentConfiguration.text = "\(pokemon.id). \(pokemon.name.capitalized)"
+            contentConfiguration.text = "\(pokemon.id). \(pokemon.name)"
             cell.contentConfiguration = contentConfiguration
             cell.accessories = [.disclosureIndicator()]
         }

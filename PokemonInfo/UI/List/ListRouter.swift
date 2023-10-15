@@ -6,26 +6,12 @@
 //
 
 import UIKit
-import OSLog
 
 protocol ListRouterProtocol: AnyObject {
     func openDetails(for urlString: String)
 }
 
 final class ListRouter {
-    
-    // MARK: Types
-
-    enum Errors: LocalizedError {
-        case navControllerNotFound
-
-        var errorDescription: String? {
-            switch self {
-            case .navControllerNotFound:
-                return "UINavigationController not found"
-            }
-        }
-    }
     
     // MARK: Public Properties
     
@@ -34,7 +20,6 @@ final class ListRouter {
     // MARK: Private Properties
     
     private let webService: WebServiceProtocol
-    private let logger = Logger(subsystem: #file, category: "Error logger")
     
     // MARK: Initialisers
     
@@ -49,10 +34,7 @@ final class ListRouter {
 extension ListRouter: ListRouterProtocol {
     
     func openDetails(for urlString: String) {
-        guard let navigationController = viewController?.navigationController else {
-            logger.error("\(Errors.navControllerNotFound.localizedDescription, privacy: .public)")
-            return
-        }
+        guard let navigationController = viewController?.navigationController else { return }
         
         let detailVC = DetailModuleBuilder.build(webService: webService, urlString: urlString)
         navigationController.pushViewController(detailVC, animated: true)

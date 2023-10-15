@@ -16,11 +16,11 @@ final class ListInteractor {
     // MARK: Public Properties
     
     weak var presenter: ListPresenterProtocol?
+    private(set) var loadedList: [Pokemon] = []
     
     // MARK: Private Properties
     
     private let webService: WebServiceProtocol
-    private(set) var loadedList: [Pokemon] = []
     private var currentPageURL = Settings.startUrl
     
     // MARK: Initialisers
