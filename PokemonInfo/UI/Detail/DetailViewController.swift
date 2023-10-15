@@ -76,8 +76,8 @@ final class DetailViewController: UIViewController {
     // MARK: Private Methods
     
     private func initialise() {
-        self.navigationItem.title = Constants.navigationItemTitle
         view.backgroundColor = .white
+        self.navigationItem.title = Constants.navigationItemTitle
         
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false

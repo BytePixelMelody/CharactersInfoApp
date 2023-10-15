@@ -10,7 +10,6 @@
 		112B499E2AD4606100E54E5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B499D2AD4606100E54E5B /* AppDelegate.swift */; };
 		112B49A02AD4606100E54E5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B499F2AD4606100E54E5B /* SceneDelegate.swift */; };
 		112B49A22AD4606100E54E5B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49A12AD4606100E54E5B /* ListViewController.swift */; };
-		112B49A52AD4606100E54E5B /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112B49A32AD4606100E54E5B /* List.storyboard */; };
 		112B49A72AD4606200E54E5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112B49A62AD4606200E54E5B /* Assets.xcassets */; };
 		112B49AA2AD4606200E54E5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112B49A82AD4606200E54E5B /* LaunchScreen.storyboard */; };
 		112B49BA2AD5453500E54E5B /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49B92AD5453500E54E5B /* ListPresenter.swift */; };
@@ -35,7 +34,6 @@
 		112B499D2AD4606100E54E5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		112B499F2AD4606100E54E5B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		112B49A12AD4606100E54E5B /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		112B49A42AD4606100E54E5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/List.storyboard; sourceTree = "<group>"; };
 		112B49A62AD4606200E54E5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		112B49A92AD4606200E54E5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		112B49AB2AD4606200E54E5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 		112B49B82AD5429800E54E5B /* List */ = {
 			isa = PBXGroup;
 			children = (
-				112B49A32AD4606100E54E5B /* List.storyboard */,
 				112B49A12AD4606100E54E5B /* ListViewController.swift */,
 				112B49BD2AD5474400E54E5B /* ListInteractor.swift */,
 				112B49B92AD5453500E54E5B /* ListPresenter.swift */,
@@ -228,7 +225,6 @@
 			files = (
 				112B49AA2AD4606200E54E5B /* LaunchScreen.storyboard in Resources */,
 				112B49A72AD4606200E54E5B /* Assets.xcassets in Resources */,
-				112B49A52AD4606100E54E5B /* List.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,14 +259,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		112B49A32AD4606100E54E5B /* List.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				112B49A42AD4606100E54E5B /* Base */,
-			);
-			name = List.storyboard;
-			sourceTree = "<group>";
-		};
 		112B49A82AD4606200E54E5B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -414,7 +402,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Pokemon Info";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = List;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -443,7 +431,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Pokemon Info";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = List;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -10,9 +10,8 @@ import OSLog
 
 protocol ListPresenterProtocol: AnyObject {
     func viewDidLoaded() async
-    @MainActor 
-    func loadedInitList(list: [Pokemon]) async
-    func didTapDetails()
+    @MainActor func loadedInitList(list: [Pokemon]) async
+    func didTapDetails() // TODO: remake it
 }
 
 final class ListPresenter {

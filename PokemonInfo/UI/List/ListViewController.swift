@@ -5,6 +5,8 @@
 //  Created by Vyacheslav on 10.10.2023.
 //
 
+// TODO: - Manual UI, move Tasks to presenters
+
 import UIKit
 
 protocol ListViewProtocol: AnyObject {
@@ -18,10 +20,6 @@ final class ListViewController: UIViewController {
     private enum Constants {
         static let navigationItemTitle = "Pokemons"
     }
-    
-    // MARK: IBOutlet
-    
-    @IBOutlet var countLabel: UILabel!
     
     // MARK: Public Properties
     
@@ -46,15 +44,10 @@ final class ListViewController: UIViewController {
         }
     }
     
-    // MARK: IBAction
-    
-    @IBAction func didTapInfoButton(_ sender: UIButton) {
-        presenter?.didTapDetails()
-    }
-    
     // MARK: Private Methods
     
     private func initialise() {
+        view.backgroundColor = .white
         self.navigationItem.title = Constants.navigationItemTitle
         
         view.addSubview(pokemonCollectionView)
