@@ -19,8 +19,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        let webService = WebService()
-        let viewController = ListModuleBuilder.build(webService: webService)
+        let serviceLocator = ServiceLocator()
+        let viewController = ListModuleBuilder.build(serviceLocator: serviceLocator)
         let rootNavController = UINavigationController(rootViewController: viewController)
         
         window.rootViewController = rootNavController

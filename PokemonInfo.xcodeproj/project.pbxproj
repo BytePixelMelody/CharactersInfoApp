@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1111CAAB2ADD74F800D65877 /* NetworkMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111CAAA2ADD74F800D65877 /* NetworkMonitorService.swift */; };
+		1111CAAD2ADDA5D900D65877 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111CAAC2ADDA5D900D65877 /* AlertService.swift */; };
+		1111CAAF2ADDB90D00D65877 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111CAAE2ADDB90D00D65877 /* CoreDataService.swift */; };
+		1111CAB12ADDB96A00D65877 /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1111CAB02ADDB96A00D65877 /* ServiceLocator.swift */; };
 		112B499E2AD4606100E54E5B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B499D2AD4606100E54E5B /* AppDelegate.swift */; };
 		112B49A02AD4606100E54E5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B499F2AD4606100E54E5B /* SceneDelegate.swift */; };
 		112B49A22AD4606100E54E5B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B49A12AD4606100E54E5B /* ListViewController.swift */; };
@@ -30,6 +34,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1111CAAA2ADD74F800D65877 /* NetworkMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorService.swift; sourceTree = "<group>"; };
+		1111CAAC2ADDA5D900D65877 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		1111CAAE2ADDB90D00D65877 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		1111CAB02ADDB96A00D65877 /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
 		112B499A2AD4606100E54E5B /* PokemonInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		112B499D2AD4606100E54E5B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		112B499F2AD4606100E54E5B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,7 +124,11 @@
 		112B49B32AD53E7100E54E5B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1111CAB02ADDB96A00D65877 /* ServiceLocator.swift */,
 				11557B922AD73ED30050EDFF /* WebService.swift */,
+				1111CAAA2ADD74F800D65877 /* NetworkMonitorService.swift */,
+				1111CAAC2ADDA5D900D65877 /* AlertService.swift */,
+				1111CAAE2ADDB90D00D65877 /* CoreDataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -242,15 +254,19 @@
 				112B49BA2AD5453500E54E5B /* ListPresenter.swift in Sources */,
 				112B49A22AD4606100E54E5B /* ListViewController.swift in Sources */,
 				11557B862AD6995B0050EDFF /* DetailPresenter.swift in Sources */,
+				1111CAAF2ADDB90D00D65877 /* CoreDataService.swift in Sources */,
 				11557B902AD7351D0050EDFF /* UIImageView+make.swift in Sources */,
 				11557B972AD7C22A0050EDFF /* DetailEntity.swift in Sources */,
 				112B499E2AD4606100E54E5B /* AppDelegate.swift in Sources */,
 				112B49C02AD5550800E54E5B /* ListModuleBuilder.swift in Sources */,
 				112B49BC2AD5470900E54E5B /* ListRouter.swift in Sources */,
 				112B49A02AD4606100E54E5B /* SceneDelegate.swift in Sources */,
+				1111CAB12ADDB96A00D65877 /* ServiceLocator.swift in Sources */,
 				11557B992AD810150050EDFF /* Settings.swift in Sources */,
+				1111CAAD2ADDA5D900D65877 /* AlertService.swift in Sources */,
 				11557B872AD6995B0050EDFF /* DetailRouter.swift in Sources */,
 				11557B952AD7BF510050EDFF /* ListEntity.swift in Sources */,
+				1111CAAB2ADD74F800D65877 /* NetworkMonitorService.swift in Sources */,
 				11557B892AD6995B0050EDFF /* DetailInteractor.swift in Sources */,
 				11557B852AD6995B0050EDFF /* DetailModuleBuilder.swift in Sources */,
 			);

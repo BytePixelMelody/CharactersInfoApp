@@ -23,23 +23,45 @@ protocol ListPresenterProtocol: AnyObject {
 
 final class ListPresenter {
     
+    // MARK: Types
+
+    enum Errors: LocalizedError {
+        case noInternetConnection
+
+        var errorDescription: String? {
+            switch self {
+            case .noInternetConnection:
+                return "Please, check your Internet connection"
+            }
+        }
+    }
+    
     // MARK: Public Properties
     
     weak var view: ListViewProtocol?
-    let router: ListRouterProtocol
-    let interactor: ListInteractorProtocol
     
     // MARK: Private Properties
     
+    private let router: ListRouterProtocol
+    private let interactor: ListInteractorProtocol
+    private let networkMonitorService: NetworkMonitorServiceProtocol
+    private let alertService: any AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
+    
     private var currentURL: String? = Settings.startUrl
-    var loadingURLs = Set<String>()
+    private var loadingURLs = Set<String>()
 
     // MARK: Initialisers
     
-    init(router: ListRouterProtocol, interactor: ListInteractorProtocol) {
+    init(router: ListRouterProtocol, 
+         interactor: ListInteractorProtocol,
+         networkMonitorService: NetworkMonitorServiceProtocol,
+         alertService: any AlertServiceProtocol
+    ) {
         self.router = router
         self.interactor = interactor
+        self.networkMonitorService = networkMonitorService
+        self.alertService = alertService
     }
     
 }
@@ -62,13 +84,21 @@ extension ListPresenter: ListPresenterProtocol {
 
         Task {
             do {
-                // TODO: check internet here and throw
+                try connection()
                 try await interactor.getPokemons(by: currentURL)
             } catch {
                 logger.error("\(error.localizedDescription, privacy: .public)")
                 // TODO: catch errors
             }
             loadingURLs.remove(currentURL)
+        }
+    }
+    
+    private func connection() throws {
+        if let isConnected = networkMonitorService.isConnected {
+            if isConnected == false {
+                throw Errors.noInternetConnection
+            }
         }
     }
     

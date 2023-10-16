@@ -19,12 +19,12 @@ final class ListRouter {
     
     // MARK: Private Properties
     
-    private let webService: WebServiceProtocol
+    private let serviceLocator: ServiceLocatorProtocol
     
     // MARK: Initialisers
     
-    init(webService: WebServiceProtocol) {
-        self.webService = webService
+    init(serviceLocator: ServiceLocatorProtocol) {
+        self.serviceLocator = serviceLocator
     }
     
 }
@@ -36,7 +36,7 @@ extension ListRouter: ListRouterProtocol {
     func openDetails(for urlString: String) {
         guard let navigationController = viewController?.navigationController else { return }
         
-        let detailVC = DetailModuleBuilder.build(webService: webService, urlString: urlString)
+        let detailVC = DetailModuleBuilder.build(serviceLocator: serviceLocator, urlString: urlString)
         navigationController.pushViewController(detailVC, animated: true)
     }
 

@@ -39,19 +39,28 @@ final class DetailPresenter {
     // MARK: Public Properties
     
     weak var view: DetailViewProtocol?
-    let router: DetailRouterProtocol
-    let interactor: DetailInteractorProtocol
-    
-    // MARK: Initialisers
-
-    init(interactor: DetailInteractorProtocol, router: DetailRouterProtocol) {
-        self.interactor = interactor
-        self.router = router
-    }
     
     // MARK: Private Properties
     
+    private let router: DetailRouterProtocol
+    private let interactor: DetailInteractorProtocol
+    private let networkMonitorService: NetworkMonitorServiceProtocol
+    private let alertService: any AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
+    
+    // MARK: Initialisers
+
+    init(
+        router: DetailRouterProtocol,
+        interactor: DetailInteractorProtocol,
+        networkMonitorService: NetworkMonitorServiceProtocol,
+        alertService: any AlertServiceProtocol
+    ) {
+        self.router = router
+        self.interactor = interactor
+        self.networkMonitorService = networkMonitorService
+        self.alertService = alertService
+    }
     
 }
 
