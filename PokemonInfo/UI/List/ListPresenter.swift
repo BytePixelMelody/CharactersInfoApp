@@ -12,10 +12,12 @@ protocol ListPresenterProtocol: AnyObject {
     
     // view calls
     func viewDidLoaded()
+    func loadNextPage()
     func didTapPokemon(pokemon: Pokemon)
     
     // interactor calls
-    @MainActor func loadedInitList(list: [Pokemon]) async
+    func loadedURL(_ urlString: String, nextURLString: String?)
+    @MainActor func loadedPokemons(pokemons: [Pokemon]) async
     
 }
 
@@ -27,16 +29,18 @@ final class ListPresenter {
     let router: ListRouterProtocol
     let interactor: ListInteractorProtocol
     
+    // MARK: Private Properties
+    
+    private let logger = Logger(subsystem: #file, category: "Error logger")
+    private var currentURL: String? = Settings.startUrl
+    var loadingURLs = Set<String>()
+
     // MARK: Initialisers
     
     init(router: ListRouterProtocol, interactor: ListInteractorProtocol) {
         self.router = router
         self.interactor = interactor
     }
-    
-    // MARK: Private Properties
-    
-    private let logger = Logger(subsystem: #file, category: "Error logger")
     
 }
 
@@ -48,14 +52,23 @@ extension ListPresenter: ListPresenterProtocol {
     // view calls
     
     func viewDidLoaded() {
+        loadNextPage()
+    }
+    
+    func loadNextPage() {
+        // exit if no more pages or already loading
+        guard let currentURL, !loadingURLs.contains(currentURL) else { return }
+        loadingURLs.insert(currentURL)
+
         Task {
             do {
-                // TODO: check internet here and trow
-                try await interactor.getListPage()
+                // TODO: check internet here and throw
+                try await interactor.getPokemons(by: currentURL)
             } catch {
-                logger.error("\(error, privacy: .public)")
+                logger.error("\(error.localizedDescription, privacy: .public)")
                 // TODO: catch errors
             }
+            loadingURLs.remove(currentURL)
         }
     }
     
@@ -66,9 +79,14 @@ extension ListPresenter: ListPresenterProtocol {
     
     // interactor calls
     
+    func loadedURL(_ urlString: String, nextURLString: String?) {
+        loadingURLs.remove(urlString)
+        currentURL = nextURLString
+    }
+    
     @MainActor
-    func loadedInitList(list: [Pokemon]) async {
-        view?.initializeSnapshot(with: list)
+    func loadedPokemons(pokemons: [Pokemon]) async {
+        view?.updateSnapshot(with: pokemons)
     }
     
 }

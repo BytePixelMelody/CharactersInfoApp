@@ -6,9 +6,9 @@
 //
 
 // interactor works with data services
-protocol ListInteractorProtocol {
-    var loadedList: [Pokemon] { get }
-    func getListPage() async throws
+protocol ListInteractorProtocol: AnyObject {
+    var pokemons: [Pokemon] { get }
+    func getPokemons(by urlString: String) async throws 
 }
 
 final class ListInteractor {
@@ -16,12 +16,16 @@ final class ListInteractor {
     // MARK: Public Properties
     
     weak var presenter: ListPresenterProtocol?
-    private(set) var loadedList: [Pokemon] = []
+    var pokemons: [Pokemon] {
+        return pokemonsDic
+            .sorted { $0.key < $1.key }
+            .map { $0.value }
+    }
     
     // MARK: Private Properties
     
     private let webService: WebServiceProtocol
-    private var currentPageURL = Settings.startUrl
+    private var pokemonsDic: [Int: Pokemon] = [:]
     
     // MARK: Initialisers
     
@@ -36,13 +40,19 @@ final class ListInteractor {
 extension ListInteractor: ListInteractorProtocol {
     
     // MARK: Public Methods
-    
-    func getListPage() async throws {
-        let receivedList: ListAPI = try await webService.getApiValue(from: currentPageURL)
-        let pokemonsAPI = receivedList.results
-        let pokemons = pokemonsAPI.compactMap { Pokemon(from: $0) }
-        loadedList.append(contentsOf: pokemons)
-        await presenter?.loadedInitList(list: loadedList)
+
+    func getPokemons(by urlString: String) async throws {
+        let listAPI: ListAPI = try await webService.getApiValue(from: urlString)
+        let pokemonsAPI = listAPI.results
+        
+        let loadedPokemons = pokemonsAPI.compactMap { Pokemon(from: $0) }
+        let loadedPokemonsDic = Dictionary(uniqueKeysWithValues: loadedPokemons.map { ($0.id, $0) })
+        self.pokemonsDic.merge(loadedPokemonsDic) { current, new in
+            return new
+        }
+
+        presenter?.loadedURL(urlString, nextURLString: listAPI.next)
+        await presenter?.loadedPokemons(pokemons: pokemons)
     }
     
 }

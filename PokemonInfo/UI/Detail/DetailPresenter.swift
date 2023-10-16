@@ -68,7 +68,7 @@ extension DetailPresenter: DetailPresenterProtocol {
                 // TODO: check internet here and throw
                 try await interactor.getPokemonDetails()
             } catch {
-                logger.error("\(error, privacy: .public)")
+                logger.error("\(error.localizedDescription, privacy: .public)")
                 // TODO: catch errors here
             }
         }

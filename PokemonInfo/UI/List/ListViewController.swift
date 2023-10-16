@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ListViewProtocol: AnyObject {
-    func initializeSnapshot(with pokemons: [Pokemon])
+    func updateSnapshot(with pokemons: [Pokemon])
 }
 
 final class ListViewController: UIViewController {
@@ -17,6 +17,7 @@ final class ListViewController: UIViewController {
     
     private enum Constants {
         static let navigationItemTitle = "Pokemons"
+        static let screensCountToLoadNextPage = 2.0
     }
     
     // MARK: Public Properties
@@ -28,7 +29,6 @@ final class ListViewController: UIViewController {
     
     private lazy var pokemonCollectionView = createListCollectionView()
     private lazy var dataSource = createDiffableDataSource()
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, Item>?
 
     // MARK: UIViewController
 
@@ -63,12 +63,11 @@ extension ListViewController: ListViewProtocol {
 
     // UICollectionView
     
-    func initializeSnapshot(with pokemons: [Pokemon]) {
+    func updateSnapshot(with pokemons: [Pokemon]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.pokemonList])
         snapshot.appendItems(pokemons.map { Item.pokemon($0) }, toSection: .pokemonList)
         dataSource.apply(snapshot)
-        self.snapshot = snapshot
     }
 
 }
@@ -135,6 +134,17 @@ extension ListViewController: UICollectionViewDelegate {
         switch item {
         case .pokemon(let pokemon):
             presenter?.didTapPokemon(pokemon: pokemon)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset.y
+        let scrollViewHeight = scrollView.frame.height
+        let contentHeight = scrollView.contentSize.height
+        
+        // if there is less than n screens at the bottom
+        if contentHeight - (contentOffset + scrollViewHeight) < scrollViewHeight * Constants.screensCountToLoadNextPage {
+            presenter?.loadNextPage()
         }
     }
 }
