@@ -8,8 +8,8 @@
 import UIKit
 
 protocol DetailViewProtocol: AnyObject {
-    @MainActor
-    func showDetail(name: String, image: UIImage?, type: String, weight: String, height: String)
+    func showDetails(name: String, type: String, weightKg: String, height: String)
+    func showDetailsImage(image: UIImage?)
 }
 
 final class DetailViewController: UIViewController {
@@ -17,17 +17,17 @@ final class DetailViewController: UIViewController {
     // MARK: Constants
     
     private enum Constants {
-        static let navigationItemTitle  = "Pokemon details"
+        static let navigationItemTitle  = "Details"
         
         static let stackViewSpacing = 8.0
-        static let stackViewAlignment = UIStackView.Alignment.leading
+        static let stackViewAlignment = UIStackView.Alignment.center
         static let stackViewDistribution = UIStackView.Distribution.equalSpacing
         
-        static let imageViewWidth = 96.0
-        static let imageViewHeight = 96.0
         static let imageViewContentMode = UIView.ContentMode.scaleAspectFit
         static let imageViewCornerRadius = 3.0
         static let imageViewClipsToBounds = true
+        static let imageViewWidthAnchorMultiplier = 0.5
+        static let imageViewHeightToWidthMultiplier = 1.0
         
         static let namePrefix = "Name: "
         static let typePrefix = "Types: "
@@ -51,8 +51,6 @@ final class DetailViewController: UIViewController {
     
     private let nameLabel = UILabel(frame: .zero)
     private let imageView = UIImageView.makeImageView(
-        width: Constants.imageViewWidth,
-        height: Constants.imageViewHeight,
         contentMode: Constants.imageViewContentMode,
         cornerRadius: Constants.imageViewCornerRadius,
         clipsToBounds: Constants.imageViewClipsToBounds
@@ -66,18 +64,15 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Task {
-            await presenter?.viewDidLoaded()
-        }
-        
         initialise()
+        presenter?.viewDidLoaded()
     }
     
     // MARK: Private Methods
     
     private func initialise() {
-        self.navigationItem.title = Constants.navigationItemTitle
         view.backgroundColor = .white
+        self.navigationItem.title = Constants.navigationItemTitle
         
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,6 +84,18 @@ final class DetailViewController: UIViewController {
         
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(
+                equalTo: stackView.widthAnchor,
+                multiplier: Constants.imageViewWidthAnchorMultiplier
+            ),
+            imageView.heightAnchor.constraint(
+                equalTo: imageView.widthAnchor,
+                multiplier: Constants.imageViewHeightToWidthMultiplier
+            )
+        ])
+        
         stackView.addArrangedSubview(typeLabel)
         stackView.addArrangedSubview(weightLabel)
         stackView.addArrangedSubview(heightLabel)
@@ -102,13 +109,15 @@ extension DetailViewController: DetailViewProtocol {
     
     // MARK: Public Methods
     
-    @MainActor
-    func showDetail(name: String, image: UIImage?, type: String, weight: String, height: String) {
+    func showDetails(name: String, type: String, weightKg: String, height: String) {
         nameLabel.text = Constants.namePrefix + name
-        imageView.image = image
         typeLabel.text = Constants.typePrefix + type
-        weightLabel.text = Constants.weightPrefix + weight + Constants.weightSuffix
+        weightLabel.text = Constants.weightPrefix + weightKg + Constants.weightSuffix
         heightLabel.text = Constants.heightMeasurePrefix + height + Constants.heightMeasureSuffix
+    }  
+    
+    func showDetailsImage(image: UIImage?) {
+        imageView.image = image
     }
     
 }

@@ -9,8 +9,13 @@ import UIKit
 import OSLog
 
 protocol DetailPresenterProtocol: AnyObject {
-    func viewDidLoaded() async
+    
+    // view calls
+    func viewDidLoaded()
+    
+    // interactor calls
     @MainActor func loadedPokemonDetails(pokemonDetails: PokemonDetails) async
+    @MainActor func loadedPokemonImageData(imageData: Data) async
 }
 
 final class DetailPresenter {
@@ -55,31 +60,36 @@ final class DetailPresenter {
 extension DetailPresenter: DetailPresenterProtocol {
     
     // MARK: Public Methods
-    
-    func viewDidLoaded() async {
-        do {
-            // TODO: check internet here and throw
-            try await interactor.getPokemonDetails()
-        } catch {
-            logger.error("\(error, privacy: .public)")
-            // TODO: catch errors here
+    // view calls
+
+    func viewDidLoaded() {
+        Task {
+            do {
+                // TODO: check internet here and throw
+                try await interactor.getPokemonDetails()
+            } catch {
+                logger.error("\(error.localizedDescription, privacy: .public)")
+                // TODO: catch errors here
+            }
         }
     }
     
+    // interactor calls
+
     @MainActor
     func loadedPokemonDetails(pokemonDetails: PokemonDetails) async {
-        var image: UIImage? = nil
-        if let imageData = pokemonDetails.imageData {
-            image = UIImage(data: imageData)
-        }
-        
-        view?.showDetail(
+        view?.showDetails(
             name: pokemonDetails.name,
-            image: image,
             type: pokemonDetails.type,
-            weight: pokemonDetails.weight,
+            weightKg: pokemonDetails.weightKg,
             height: pokemonDetails.height
         )
+    }
+    
+    @MainActor
+    func loadedPokemonImageData(imageData: Data) async {
+        let image = UIImage(data: imageData)
+        view?.showDetailsImage(image: image)
     }
     
 }

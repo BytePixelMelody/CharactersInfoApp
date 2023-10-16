@@ -19,7 +19,7 @@ struct Pokemon: Codable, Hashable {
             return nil
         }
         self.id = id
-        self.name = pokemonAPI.name
+        self.name = pokemonAPI.name.capitalized
         self.url = pokemonAPI.url
     }
 }

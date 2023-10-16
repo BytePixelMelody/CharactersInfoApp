@@ -18,8 +18,7 @@ final class ListModuleBuilder {
         
         let presenter = ListPresenter(router: router, interactor: interactor)
         
-        let storyboard = UIStoryboard(name: "List", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "ListViewController") as ListViewController
+        let viewController = ListViewController()
         
         presenter.view = viewController
         router.viewController = viewController

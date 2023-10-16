@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ListViewProtocol: AnyObject {
-    func initializeSnapshot(with pokemons: [Pokemon])
+    func updateSnapshot(with pokemons: [Pokemon])
 }
 
 final class ListViewController: UIViewController {
@@ -17,11 +17,8 @@ final class ListViewController: UIViewController {
     
     private enum Constants {
         static let navigationItemTitle = "Pokemons"
+        static let screensCountToLoadNextPage = 2.0
     }
-    
-    // MARK: IBOutlet
-    
-    @IBOutlet var countLabel: UILabel!
     
     // MARK: Public Properties
     
@@ -32,7 +29,6 @@ final class ListViewController: UIViewController {
     
     private lazy var pokemonCollectionView = createListCollectionView()
     private lazy var dataSource = createDiffableDataSource()
-    private var snapshot: NSDiffableDataSourceSnapshot<Section, Item>?
 
     // MARK: UIViewController
 
@@ -40,21 +36,13 @@ final class ListViewController: UIViewController {
         super.viewDidLoad()
 
         initialise()
-        
-        Task {
-            await presenter?.viewDidLoaded()
-        }
-    }
-    
-    // MARK: IBAction
-    
-    @IBAction func didTapInfoButton(_ sender: UIButton) {
-        presenter?.didTapDetails()
+        presenter?.viewDidLoaded()
     }
     
     // MARK: Private Methods
     
     private func initialise() {
+        view.backgroundColor = .white
         self.navigationItem.title = Constants.navigationItemTitle
         
         view.addSubview(pokemonCollectionView)
@@ -75,12 +63,11 @@ extension ListViewController: ListViewProtocol {
 
     // UICollectionView
     
-    func initializeSnapshot(with pokemons: [Pokemon]) {
+    func updateSnapshot(with pokemons: [Pokemon]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.pokemonList])
         snapshot.appendItems(pokemons.map { Item.pokemon($0) }, toSection: .pokemonList)
         dataSource.apply(snapshot)
-        self.snapshot = snapshot
     }
 
 }
@@ -108,13 +95,16 @@ extension ListViewController {
     
     private func createListCollectionView() -> UICollectionView {
         let collectionViewLayout = createListLayout()
-        return UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
+        return collectionView
     }
     
     private func createListCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> {
         return UICollectionView.CellRegistration<UICollectionViewListCell, Pokemon> { cell, indexPath, pokemon in
             var contentConfiguration = UIListContentConfiguration.valueCell()
-            contentConfiguration.text = "\(pokemon.id) \(pokemon.name)"
+            contentConfiguration.text = "\(pokemon.id). \(pokemon.name)"
             cell.contentConfiguration = contentConfiguration
             cell.accessories = [.disclosureIndicator()]
         }
@@ -131,4 +121,30 @@ extension ListViewController {
         }
     }
     
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        switch item {
+        case .pokemon(let pokemon):
+            presenter?.didTapPokemon(pokemon: pokemon)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset.y
+        let scrollViewHeight = scrollView.frame.height
+        let contentHeight = scrollView.contentSize.height
+        
+        // if there is less than n screens at the bottom
+        if contentHeight - (contentOffset + scrollViewHeight) < scrollViewHeight * Constants.screensCountToLoadNextPage {
+            presenter?.loadNextPage()
+        }
+    }
 }

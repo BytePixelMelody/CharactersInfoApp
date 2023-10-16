@@ -9,10 +9,16 @@ import Foundation
 import OSLog
 
 protocol ListPresenterProtocol: AnyObject {
-    func viewDidLoaded() async
-    @MainActor 
-    func loadedInitList(list: [Pokemon]) async
-    func didTapDetails()
+    
+    // view calls
+    func viewDidLoaded()
+    func loadNextPage()
+    func didTapPokemon(pokemon: Pokemon)
+    
+    // interactor calls
+    func loadedURL(_ urlString: String, nextURLString: String?)
+    @MainActor func loadedPokemons(pokemons: [Pokemon]) async
+    
 }
 
 final class ListPresenter {
@@ -23,16 +29,18 @@ final class ListPresenter {
     let router: ListRouterProtocol
     let interactor: ListInteractorProtocol
     
+    // MARK: Private Properties
+    
+    private let logger = Logger(subsystem: #file, category: "Error logger")
+    private var currentURL: String? = Settings.startUrl
+    var loadingURLs = Set<String>()
+
     // MARK: Initialisers
     
     init(router: ListRouterProtocol, interactor: ListInteractorProtocol) {
         self.router = router
         self.interactor = interactor
     }
-    
-    // MARK: Private Properties
-    
-    private let logger = Logger(subsystem: #file, category: "Error logger")
     
 }
 
@@ -41,27 +49,44 @@ final class ListPresenter {
 extension ListPresenter: ListPresenterProtocol {
 
     // MARK: Public Methods
+    // view calls
     
-    func viewDidLoaded() async {
-        do {
-            // TODO: check internet here and trow
-            try await interactor.getListPage()
-        } catch {
-            logger.error("\(error, privacy: .public)")
-            // TODO: catch errors
+    func viewDidLoaded() {
+        loadNextPage()
+    }
+    
+    func loadNextPage() {
+        // exit if no more pages or already loading
+        guard let currentURL, !loadingURLs.contains(currentURL) else { return }
+        loadingURLs.insert(currentURL)
+
+        Task {
+            do {
+                // TODO: check internet here and throw
+                try await interactor.getPokemons(by: currentURL)
+            } catch {
+                logger.error("\(error.localizedDescription, privacy: .public)")
+                // TODO: catch errors
+            }
+            loadingURLs.remove(currentURL)
         }
     }
     
-    @MainActor
-    func loadedInitList(list: [Pokemon]) async {
-        view?.initializeSnapshot(with: list)
+    func didTapPokemon(pokemon: Pokemon) {
+        let urlString = pokemon.url
+        router.openDetails(for: urlString)
     }
     
-    func didTapDetails() {
-        //        let _ = interactor.loadedList[3]
-        
-        let urlStringFromView = "https://pokeapi.co/api/v2/pokemon/18/"
-        router.openDetails(for: urlStringFromView)
+    // interactor calls
+    
+    func loadedURL(_ urlString: String, nextURLString: String?) {
+        loadingURLs.remove(urlString)
+        currentURL = nextURLString
+    }
+    
+    @MainActor
+    func loadedPokemons(pokemons: [Pokemon]) async {
+        view?.updateSnapshot(with: pokemons)
     }
     
 }

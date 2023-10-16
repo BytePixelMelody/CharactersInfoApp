@@ -8,19 +8,25 @@
 import Foundation
 
 struct PokemonDetails: Codable {
-    let url: String
+    let id: Int
     let name: String
-    let imageData: Data?
+    let imageURLString: String
+    var imageData: Data?
     let type: String
-    let weight: String
+    let weightKg: String
     let height: String
     
-    init(pokemonURLString: String, pokemonDetailsAPI: PokemonDetailsAPI, imageData: Data?) {
-        self.url = pokemonURLString
-        self.name = pokemonDetailsAPI.name
-        self.imageData = imageData
+    init?(from pokemonDetailsAPI: PokemonDetailsAPI, by pokemonURLString: String) {
+        guard let idString = pokemonURLString.dropLast(1).components(separatedBy: "/").last,
+              let id = Int(idString)
+        else {
+            return nil
+        }
+        self.id = id
+        self.name = pokemonDetailsAPI.name.capitalized
+        self.imageURLString = pokemonDetailsAPI.sprites.frontDefault
         self.type = pokemonDetailsAPI.types.map { $0.type.name }.joined(separator: ", ")
-        self.weight = pokemonDetailsAPI.weight.description
+        self.weightKg = (Double(pokemonDetailsAPI.weight) / 1000).description
         self.height = pokemonDetailsAPI.height.description
     }
 }
