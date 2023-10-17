@@ -42,7 +42,6 @@ final class ListViewController: UIViewController {
     // MARK: Private Methods
     
     private func initialise() {
-        view.backgroundColor = .white
         self.navigationItem.title = Constants.navigationItemTitle
         
         view.addSubview(pokemonCollectionView)

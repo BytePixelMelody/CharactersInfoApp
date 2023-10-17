@@ -11,12 +11,20 @@ final class ListModuleBuilder {
     
     // MARK: Static Methods
     
-    static func build(webService: WebServiceProtocol) -> ListViewController {
+    static func build(serviceLocator: ServiceLocatorProtocol) -> ListViewController {
+        let webService = serviceLocator.getWebService()
+        let networkMonitorService = serviceLocator.getNetworkMonitorService()
+        let alertService = serviceLocator.getAlertService()
+
+        let router = ListRouter(serviceLocator: serviceLocator)
         let interactor = ListInteractor(webService: webService)
         
-        let router = ListRouter(webService: webService)
-        
-        let presenter = ListPresenter(router: router, interactor: interactor)
+        let presenter = ListPresenter(
+            router: router,
+            interactor: interactor,
+            networkMonitorService: networkMonitorService,
+            alertService: alertService
+        )
         
         let viewController = ListViewController()
         

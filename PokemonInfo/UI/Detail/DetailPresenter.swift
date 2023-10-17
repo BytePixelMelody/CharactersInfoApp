@@ -39,19 +39,28 @@ final class DetailPresenter {
     // MARK: Public Properties
     
     weak var view: DetailViewProtocol?
-    let router: DetailRouterProtocol
-    let interactor: DetailInteractorProtocol
-    
-    // MARK: Initialisers
-
-    init(interactor: DetailInteractorProtocol, router: DetailRouterProtocol) {
-        self.interactor = interactor
-        self.router = router
-    }
     
     // MARK: Private Properties
     
+    private let router: DetailRouterProtocol
+    private let interactor: DetailInteractorProtocol
+    private let networkMonitorService: NetworkMonitorServiceProtocol
+    private let alertService: AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
+    
+    // MARK: Initialisers
+
+    init(
+        router: DetailRouterProtocol,
+        interactor: DetailInteractorProtocol,
+        networkMonitorService: NetworkMonitorServiceProtocol,
+        alertService: AlertServiceProtocol
+    ) {
+        self.router = router
+        self.interactor = interactor
+        self.networkMonitorService = networkMonitorService
+        self.alertService = alertService
+    }
     
 }
 
@@ -65,11 +74,11 @@ extension DetailPresenter: DetailPresenterProtocol {
     func viewDidLoaded() {
         Task {
             do {
-                // TODO: check internet here and throw
+                try networkMonitorService.checkConnection()
                 try await interactor.getPokemonDetails()
             } catch {
                 logger.error("\(error.localizedDescription, privacy: .public)")
-                // TODO: catch errors here
+                await catchLoadingError(error: error)
             }
         }
     }
@@ -92,4 +101,37 @@ extension DetailPresenter: DetailPresenterProtocol {
         view?.showDetailsImage(image: image)
     }
     
+    // MARK: Private Methods
+
+    private func catchLoadingError(error: Error) async {
+        switch error {
+        case NetworkMonitorErrors.noInternetConnection:
+            await showAlert(.noInternetConnection)
+        case let error as NSError where
+            error.domain == NSURLErrorDomain &&
+            error.code == NSURLErrorNotConnectedToInternet:
+            await showAlert(.noInternetConnection)
+        default:
+            await showAlert(.dataLoadingError, message: error.localizedDescription)
+        }
+    }
+    
+    @MainActor
+    private func showAlert(_ alertType: AlertType, message: String? = nil) async {
+        guard let viewController = view as? UIViewController else { return }
+        
+        switch alertType {
+        case .noInternetConnection:
+            if networkMonitorService.internetAlertShowed == true {
+                return
+            } else {
+                networkMonitorService.internetAlertShowed = true
+            }
+        default:
+            break
+        }
+        
+        alertService.showAlert(with: alertType, on: viewController, message: message)
+    }
+
 }
