@@ -45,7 +45,7 @@ final class DetailPresenter {
     private let router: DetailRouterProtocol
     private let interactor: DetailInteractorProtocol
     private let networkMonitorService: NetworkMonitorServiceProtocol
-    private let alertService: any AlertServiceProtocol
+    private let alertService: AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
     
     // MARK: Initialisers
@@ -54,7 +54,7 @@ final class DetailPresenter {
         router: DetailRouterProtocol,
         interactor: DetailInteractorProtocol,
         networkMonitorService: NetworkMonitorServiceProtocol,
-        alertService: any AlertServiceProtocol
+        alertService: AlertServiceProtocol
     ) {
         self.router = router
         self.interactor = interactor

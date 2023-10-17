@@ -5,7 +5,7 @@
 //  Created by Vyacheslav on 10.10.2023.
 //
 
-import Foundation
+import UIKit
 import OSLog
 
 protocol ListPresenterProtocol: AnyObject {
@@ -22,20 +22,7 @@ protocol ListPresenterProtocol: AnyObject {
 }
 
 final class ListPresenter {
-    
-    // MARK: Types
-
-    enum Errors: LocalizedError {
-        case noInternetConnection
-
-        var errorDescription: String? {
-            switch self {
-            case .noInternetConnection:
-                return "Please, check your Internet connection"
-            }
-        }
-    }
-    
+     
     // MARK: Public Properties
     
     weak var view: ListViewProtocol?
@@ -45,18 +32,19 @@ final class ListPresenter {
     private let router: ListRouterProtocol
     private let interactor: ListInteractorProtocol
     private let networkMonitorService: NetworkMonitorServiceProtocol
-    private let alertService: any AlertServiceProtocol
+    private let alertService: AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
     
     private var currentURL: String? = Settings.startUrl
     private var loadingURLs = Set<String>()
+    private var internetAlertShowed = false
 
     // MARK: Initialisers
     
     init(router: ListRouterProtocol, 
          interactor: ListInteractorProtocol,
          networkMonitorService: NetworkMonitorServiceProtocol,
-         alertService: any AlertServiceProtocol
+         alertService: AlertServiceProtocol
     ) {
         self.router = router
         self.interactor = interactor
@@ -78,28 +66,52 @@ extension ListPresenter: ListPresenterProtocol {
     }
     
     func loadNextPage() {
-        // exit if no more pages or already loading
+        // exit if no more pages or ULR is already loading
         guard let currentURL, !loadingURLs.contains(currentURL) else { return }
         loadingURLs.insert(currentURL)
 
         Task {
             do {
-                try connection()
+                try networkMonitorService.checkConnection()
+                internetAlertShowed = false // connection is good
                 try await interactor.getPokemons(by: currentURL)
             } catch {
                 logger.error("\(error.localizedDescription, privacy: .public)")
-                // TODO: catch errors
+                await catchLoadingError(error: error)
             }
             loadingURLs.remove(currentURL)
         }
     }
     
-    private func connection() throws {
-        if let isConnected = networkMonitorService.isConnected {
-            if isConnected == false {
-                throw Errors.noInternetConnection
-            }
+    private func catchLoadingError(error: Error) async {
+        switch error {
+        case NetworkMonitorErrors.noInternetConnection:
+            await showAlert(.noInternetConnection)
+        case let error as NSError where
+            error.domain == NSURLErrorDomain &&
+            error.code == NSURLErrorNotConnectedToInternet:
+            await showAlert(.noInternetConnection)
+        default:
+            await showAlert(.dataLoadingError, message: error.localizedDescription)
         }
+    }
+    
+    @MainActor
+    private func showAlert(_ alertType: AlertType, message: String? = nil) async {
+        guard let viewController = view as? UIViewController else { return }
+
+        switch alertType {
+        case .noInternetConnection:
+            if internetAlertShowed == true {
+                return
+            } else {
+                internetAlertShowed = true
+            }
+        default:
+            break
+        }
+        
+        alertService.showAlert(with: alertType, on: viewController, message: message)
     }
     
     func didTapPokemon(pokemon: Pokemon) {

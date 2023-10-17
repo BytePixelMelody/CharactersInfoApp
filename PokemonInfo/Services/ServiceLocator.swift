@@ -10,7 +10,7 @@ import Foundation
 protocol ServiceLocatorProtocol {
     func getWebService() -> WebServiceProtocol
     func getNetworkMonitorService() -> NetworkMonitorServiceProtocol
-    func getAlertService() -> any AlertServiceProtocol
+    func getAlertService() -> AlertServiceProtocol
     func getCoreDataService() -> CoreDataServiceProtocol
 }
 
@@ -56,10 +56,10 @@ final class ServiceLocator: ServiceLocatorProtocol {
     }
     
     @discardableResult
-    func getAlertService() -> any AlertServiceProtocol {
+    func getAlertService() -> AlertServiceProtocol {
         let key = #function
         // service exist
-        if let service = services[key] as? (any AlertServiceProtocol) {
+        if let service = services[key] as? AlertServiceProtocol {
             return service
         }
         // service not exist
