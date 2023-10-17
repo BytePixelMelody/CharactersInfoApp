@@ -37,7 +37,6 @@ final class ListPresenter {
     
     private var currentURL: String? = Settings.startUrl
     private var loadingURLs = Set<String>()
-    private var internetAlertShowed = false
 
     // MARK: Initialisers
     
@@ -57,7 +56,7 @@ final class ListPresenter {
 // MARK: - ListPresenterProtocol
 
 extension ListPresenter: ListPresenterProtocol {
-
+    
     // MARK: Public Methods
     // view calls
     
@@ -73,7 +72,6 @@ extension ListPresenter: ListPresenterProtocol {
         Task {
             do {
                 try networkMonitorService.checkConnection()
-                internetAlertShowed = false // connection is good
                 try await interactor.getPokemons(by: currentURL)
             } catch {
                 logger.error("\(error.localizedDescription, privacy: .public)")
@@ -81,37 +79,6 @@ extension ListPresenter: ListPresenterProtocol {
             }
             loadingURLs.remove(currentURL)
         }
-    }
-    
-    private func catchLoadingError(error: Error) async {
-        switch error {
-        case NetworkMonitorErrors.noInternetConnection:
-            await showAlert(.noInternetConnection)
-        case let error as NSError where
-            error.domain == NSURLErrorDomain &&
-            error.code == NSURLErrorNotConnectedToInternet:
-            await showAlert(.noInternetConnection)
-        default:
-            await showAlert(.dataLoadingError, message: error.localizedDescription)
-        }
-    }
-    
-    @MainActor
-    private func showAlert(_ alertType: AlertType, message: String? = nil) async {
-        guard let viewController = view as? UIViewController else { return }
-
-        switch alertType {
-        case .noInternetConnection:
-            if internetAlertShowed == true {
-                return
-            } else {
-                internetAlertShowed = true
-            }
-        default:
-            break
-        }
-        
-        alertService.showAlert(with: alertType, on: viewController, message: message)
     }
     
     func didTapPokemon(pokemon: Pokemon) {
@@ -129,6 +96,39 @@ extension ListPresenter: ListPresenterProtocol {
     @MainActor
     func loadedPokemons(pokemons: [Pokemon]) async {
         view?.updateSnapshot(with: pokemons)
+    }
+    
+    // MARK: Private Methods
+
+    private func catchLoadingError(error: Error) async {
+        switch error {
+        case NetworkMonitorErrors.noInternetConnection:
+            await showAlert(.noInternetConnection)
+        case let error as NSError where
+            error.domain == NSURLErrorDomain &&
+            error.code == NSURLErrorNotConnectedToInternet:
+            await showAlert(.noInternetConnection)
+        default:
+            await showAlert(.dataLoadingError, message: error.localizedDescription)
+        }
+    }
+    
+    @MainActor
+    private func showAlert(_ alertType: AlertType, message: String? = nil) async {
+        guard let viewController = view as? UIViewController else { return }
+        
+        switch alertType {
+        case .noInternetConnection:
+            if networkMonitorService.internetAlertShowed == true {
+                return
+            } else {
+                networkMonitorService.internetAlertShowed = true
+            }
+        default:
+            break
+        }
+        
+        alertService.showAlert(with: alertType, on: viewController, message: message)
     }
     
 }
