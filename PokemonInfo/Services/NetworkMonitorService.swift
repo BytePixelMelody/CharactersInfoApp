@@ -5,21 +5,30 @@
 //  Created by Vyacheslav on 16.10.2023.
 //
 
+import Foundation
 import Network
 
 protocol NetworkMonitorServiceProtocol {
-    var isConnected: Bool? { get }
+    func checkConnection() throws
+}
+
+enum NetworkMonitorErrors: LocalizedError {
+    case noInternetConnection
+    
+    var errorDescription: String? {
+        switch self {
+        case .noInternetConnection:
+            return "Please, check your Internet connection"
+        }
+    }
 }
 
 final class NetworkMonitorService: NetworkMonitorServiceProtocol {
-    
-    // MARK: Public Properties
-    
-    private(set) var isConnected: Bool?
-    
+   
     // MARK: Private Properties
     
     private let monitor: NWPathMonitor
+    private var isConnected: Bool?
     
     // MARK: Initialisers
     
@@ -31,6 +40,16 @@ final class NetworkMonitorService: NetworkMonitorServiceProtocol {
         }
         
         monitor.start(queue: .global(qos: .utility))
+    }
+    
+    // MARK: Public Methods
+    
+    func checkConnection() throws {
+        if let isConnected {
+            if isConnected == false {
+                throw NetworkMonitorErrors.noInternetConnection
+            }
+        }
     }
     
 }
