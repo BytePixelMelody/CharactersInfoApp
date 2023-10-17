@@ -49,15 +49,15 @@ final class DetailViewController: UIViewController {
         distribution: Constants.stackViewDistribution
     )
     
-    private let nameLabel = UILabel(frame: .zero)
+    private let nameLabel = UILabel.makeLabel(textStyle: .headline)
     private let imageView = UIImageView.makeImageView(
         contentMode: Constants.imageViewContentMode,
         cornerRadius: Constants.imageViewCornerRadius,
         clipsToBounds: Constants.imageViewClipsToBounds
     )
-    private let typeLabel = UILabel(frame: .zero)
-    private let weightLabel = UILabel(frame: .zero)
-    private let heightLabel = UILabel(frame: .zero)
+    private let typeLabel = UILabel.makeLabel(textStyle: .body)
+    private let weightLabel = UILabel.makeLabel(textStyle: .body)
+    private let heightLabel = UILabel.makeLabel(textStyle: .body)
     
     // MARK: UIViewController
     
