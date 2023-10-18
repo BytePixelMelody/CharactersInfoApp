@@ -5,8 +5,6 @@
 //  Created by Vyacheslav on 10.10.2023.
 //
 
-import UIKit
-
 final class ListModuleBuilder {
     
     // MARK: Static Methods

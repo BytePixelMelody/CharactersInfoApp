@@ -5,7 +5,7 @@
 //  Created by Vyacheslav on 11.10.2023
 //
 
-import UIKit
+import Foundation
 
 protocol DetailInteractorProtocol: AnyObject {
     var loadedPokemonDetails: PokemonDetails? { get }

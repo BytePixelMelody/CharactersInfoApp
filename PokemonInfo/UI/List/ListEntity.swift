@@ -5,8 +5,6 @@
 //  Created by Vyacheslav on 12.10.2023.
 //
 
-import Foundation
-
 struct Pokemon: Codable, Hashable {
     let id: Int
     let name: String
