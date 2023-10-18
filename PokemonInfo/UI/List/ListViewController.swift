@@ -17,7 +17,7 @@ final class ListViewController: UIViewController {
     
     private enum Constants {
         static let navigationItemTitle = "Pokemons"
-        static let screensCountToLoadNextPage = 2.0
+        static let screensCountToLoadNextPage = 3.0
     }
     
     // MARK: Public Properties
@@ -43,7 +43,9 @@ final class ListViewController: UIViewController {
     
     private func initialise() {
         self.navigationItem.title = Constants.navigationItemTitle
-        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .inline
+
         view.addSubview(pokemonCollectionView)
         pokemonCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
