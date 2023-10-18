@@ -6,8 +6,6 @@
 //  
 //
 
-import UIKit
-
 final class DetailModuleBuilder {
     
     // MARK: Static Methods

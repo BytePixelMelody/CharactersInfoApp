@@ -5,7 +5,7 @@
 //  Created by Vyacheslav on 11.10.2023
 //
 
-import UIKit
+import Foundation
 
 protocol DetailInteractorProtocol: AnyObject {
     var loadedPokemonDetails: PokemonDetails? { get }
@@ -18,15 +18,12 @@ final class DetailInteractor {
 
     enum Errors: LocalizedError {
         case pokemonDetailsInitFailed(String)
-        case creatingURLFailed(String)
         case creatingImageDataFailed(String)
 
         var errorDescription: String? {
             switch self {
             case .pokemonDetailsInitFailed(let urlString):
                 return "PokemonDetails init failed with id from \(urlString)"
-            case .creatingURLFailed(let urlString):
-                return "Failed to create URL from \(urlString)"
             case .creatingImageDataFailed(let urlString):
                 return "Failed to create Data from \(urlString)"
             }
@@ -59,7 +56,7 @@ extension DetailInteractor: DetailInteractorProtocol {
     // MARK: Public Methods
     
     func getPokemonDetails() async throws {
-        let pokemonDetailsAPI: PokemonDetailsAPI = try await webService.getApiValue(from: pokemonURLString)
+        let pokemonDetailsAPI: PokemonDetailsAPI = try await webService.getDecodedJSON(by: pokemonURLString)
         guard let pokemonDetails = PokemonDetails(from: pokemonDetailsAPI, by: pokemonURLString) else {
             throw Errors.pokemonDetailsInitFailed(pokemonURLString)
         }
@@ -74,12 +71,7 @@ extension DetailInteractor: DetailInteractorProtocol {
     // MARK: Private Methods
     
     private func getPokemonDetailsImage(of pokemonDetails: PokemonDetails) async throws {
-        guard let imageURL = URL(string: pokemonDetails.imageURLString) else {
-            throw Errors.creatingURLFailed(pokemonDetails.imageURLString)
-        }
-        guard let imageData = try? Data(contentsOf: imageURL) else {
-            throw Errors.creatingImageDataFailed(pokemonDetails.imageURLString)
-        }
+        let imageData = try await webService.getRawData(by: pokemonDetails.imageURLString)
         
         await presenter?.loadedPokemonImageData(imageData: imageData)
         

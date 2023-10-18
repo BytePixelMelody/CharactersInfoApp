@@ -73,7 +73,8 @@ final class DetailViewController: UIViewController {
     private func initialise() {
         view.backgroundColor = .systemBackground
         self.navigationItem.title = Constants.navigationItemTitle
-        
+        self.navigationItem.largeTitleDisplayMode = .never
+
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

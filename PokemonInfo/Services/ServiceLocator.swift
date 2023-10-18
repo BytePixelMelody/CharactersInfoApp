@@ -5,8 +5,6 @@
 //  Created by Vyacheslav on 16.10.2023.
 //
 
-import Foundation
-
 protocol ServiceLocatorProtocol {
     func getWebService() -> WebServiceProtocol
     func getNetworkMonitorService() -> NetworkMonitorServiceProtocol

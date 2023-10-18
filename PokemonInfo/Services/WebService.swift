@@ -8,7 +8,8 @@
 import Foundation
 
 protocol WebServiceProtocol {
-    func getApiValue<T: Codable>(from url: String) async throws -> T
+    func getDecodedJSON<T: Codable>(by urlString: String) async throws -> T
+    func getRawData(by urlString: String) async throws -> Data
 }
 
 final class WebService: WebServiceProtocol {
@@ -31,9 +32,9 @@ final class WebService: WebServiceProtocol {
 
     // MARK: Public Methods
 
-    func getApiValue<T: Codable>(from url: String) async throws -> T {
-        guard let url = URL(string: url) else {
-            throw Errors.invalidUrlString(url)
+    func getDecodedJSON<T: Codable>(by urlString: String) async throws -> T {
+        guard let url = URL(string: urlString) else {
+            throw Errors.invalidUrlString(urlString)
         }
 
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -48,6 +49,20 @@ final class WebService: WebServiceProtocol {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         return try jsonDecoder.decode(T.self, from: data)
+    }
+    
+    func getRawData(by urlString: String) async throws -> Data {
+        guard let url = URL(string: urlString) else {
+            throw Errors.invalidUrlString(urlString)
+        }
+
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw Errors.invalidServerResponse(response.description)
+        }
+
+        return data
     }
 
 }

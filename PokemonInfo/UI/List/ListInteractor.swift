@@ -42,7 +42,7 @@ extension ListInteractor: ListInteractorProtocol {
     // MARK: Public Methods
 
     func getPokemons(by urlString: String) async throws {
-        let listAPI: ListAPI = try await webService.getApiValue(from: urlString)
+        let listAPI: ListAPI = try await webService.getDecodedJSON(by: urlString)
         let pokemonsAPI = listAPI.results
         
         let loadedPokemons = pokemonsAPI.compactMap { Pokemon(from: $0) }
