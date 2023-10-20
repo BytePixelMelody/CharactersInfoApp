@@ -122,10 +122,10 @@ extension DetailPresenter: DetailPresenterProtocol {
         
         switch alertType {
         case .noInternetConnection:
-            if networkMonitorService.internetAlertShowed == true {
+            if Settings.internetAlertShowed == true {
                 return
             } else {
-                networkMonitorService.internetAlertShowed = true
+                Settings.internetAlertShowed = true
             }
         default:
             break

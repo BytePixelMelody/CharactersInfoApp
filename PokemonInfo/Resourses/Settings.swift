@@ -10,5 +10,6 @@ struct Settings {
     // MARK: Public Properties
 
     static let startUrl = "https://pokeapi.co/api/v2/pokemon/"
-
+    static var internetAlertShowed = false
+    
 }

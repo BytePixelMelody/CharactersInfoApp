@@ -5,20 +5,34 @@
 //  Created by Vyacheslav on 12.10.2023.
 //
 
-struct Pokemon: Codable, Hashable {
-    let id: Int
-    let name: String
-    let url: String
+import SwiftData
+
+@Model
+final class NextURL {
+    @Attribute(.unique) var url: String?
     
-    init?(from pokemonAPI: PokemonAPI) {
-        guard let idString = pokemonAPI.url.dropLast(1).components(separatedBy: "/").last,
-              let id = Int(idString)
-        else {
-            return nil
-        }
+    init(url: String?) {
+        self.url = url
+    }
+}
+
+@Model
+final class Pokemon: Hashable {
+    @Attribute(.unique) var id: Int
+    var name: String
+    var url: String
+    
+    init(id: Int, name: String, url: String) {
         self.id = id
-        self.name = pokemonAPI.name.capitalized
-        self.url = pokemonAPI.url
+        self.name = name.capitalized
+        self.url = url
+    }
+    
+    init?(id: Int?, name: String, url: String) {
+        guard let id else { return nil }
+        self.id = id
+        self.name = name.capitalized
+        self.url = url
     }
 }
 
@@ -32,4 +46,11 @@ struct ListAPI: Codable {
 struct PokemonAPI: Codable {
     let name: String
     let url: String
+    var id: Int? {
+        if let idString = url.dropLast(1).components(separatedBy: "/").last, let id = Int(idString) {
+            return id
+        } else {
+            return nil
+        }
+    }
 }

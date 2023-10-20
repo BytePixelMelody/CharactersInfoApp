@@ -9,7 +9,6 @@ import Foundation
 import Network
 
 protocol NetworkMonitorServiceProtocol: AnyObject {
-    var internetAlertShowed: Bool { get set }
     func checkConnection() throws
 }
 
@@ -25,11 +24,7 @@ enum NetworkMonitorErrors: LocalizedError {
 }
 
 final class NetworkMonitorService: NetworkMonitorServiceProtocol {
-    
-    // MARK: Public Properties
-    
-    var internetAlertShowed: Bool = false
-   
+       
     // MARK: Private Properties
     
     private let monitor: NWPathMonitor
@@ -56,7 +51,7 @@ final class NetworkMonitorService: NetworkMonitorServiceProtocol {
             }
         }
         
-        internetAlertShowed = false // connection is ok
+        Settings.internetAlertShowed = false // connection is ok
     }
     
 }
