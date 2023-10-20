@@ -29,6 +29,20 @@ final class WebService: WebServiceProtocol {
             }
         }
     }
+    
+    // MARK: Constants
+    
+    private enum Constants {
+        static let timeoutIntervalForRequest = 5.0
+    }
+    
+    // MARK: Private Properties
+    
+    let urlSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = Constants.timeoutIntervalForRequest
+        return URLSession(configuration: configuration)
+    }()
 
     // MARK: Public Methods
 
@@ -37,7 +51,7 @@ final class WebService: WebServiceProtocol {
             throw Errors.invalidUrlString(urlString)
         }
 
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await urlSession.data(from: url)
 
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
             throw Errors.invalidServerResponse(response.description)
@@ -56,7 +70,7 @@ final class WebService: WebServiceProtocol {
             throw Errors.invalidUrlString(urlString)
         }
 
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await urlSession.data(from: url)
 
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
             throw Errors.invalidServerResponse(response.description)

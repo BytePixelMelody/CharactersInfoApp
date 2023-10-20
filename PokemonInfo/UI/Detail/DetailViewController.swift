@@ -22,6 +22,7 @@ final class DetailViewController: UIViewController {
         static let stackViewSpacing = 8.0
         static let stackViewAlignment = UIStackView.Alignment.center
         static let stackViewDistribution = UIStackView.Distribution.equalSpacing
+        static let stackViewTopOffset = 8.0
         
         static let imageViewContentMode = UIView.ContentMode.scaleAspectFit
         static let imageViewCornerRadius = 3.0
@@ -43,6 +44,7 @@ final class DetailViewController: UIViewController {
     
     // MARK: Private Properties
     
+    private let scrollView = UIScrollView.makeScrollView()
     private let stackView = UIStackView.makeVerticalStackView(
         spacing: Constants.stackViewSpacing,
         alignment: Constants.stackViewAlignment,
@@ -75,12 +77,28 @@ final class DetailViewController: UIViewController {
         self.navigationItem.title = Constants.navigationItemTitle
         self.navigationItem.largeTitleDisplayMode = .never
 
-        view.addSubview(stackView)
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            // frameLayoutGuide
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            // contentLayoutGuide
+            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+        ])
+        
+        scrollView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor)
+            stackView.topAnchor.constraint(
+                equalTo: scrollView.contentLayoutGuide.topAnchor, 
+                constant: Constants.stackViewTopOffset
+            ),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
         ])
         
         stackView.addArrangedSubview(nameLabel)
