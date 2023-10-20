@@ -38,12 +38,21 @@ final class DetailInteractor {
     // MARK: Private Properties
     
     private let webService: WebServiceProtocol
+    private let swiftDataService: SwiftDataServiceProtocol
+    private let networkMonitorService: NetworkMonitorServiceProtocol
     private let pokemonURLString: String
     
     // MARK: Initialisers
     
-    init(webService: WebServiceProtocol, urlString: String) {
+    init(
+        webService: WebServiceProtocol,
+        swiftDataService: SwiftDataServiceProtocol,
+        networkMonitorService: NetworkMonitorServiceProtocol,
+        urlString: String
+    ) {
         self.webService = webService
+        self.swiftDataService = swiftDataService
+        self.networkMonitorService = networkMonitorService
         self.pokemonURLString = urlString
     }
     

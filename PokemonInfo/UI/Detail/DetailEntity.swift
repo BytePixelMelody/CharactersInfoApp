@@ -6,15 +6,18 @@
 //
 
 import Foundation
+import SwiftData
 
-struct PokemonDetails: Codable {
-    let id: Int
-    let name: String
-    let imageURLString: String
+@Model
+class PokemonDetails {
+    @Attribute(.unique) var url: String
+    var id: Int
+    var name: String
+    var imageURLString: String
     var imageData: Data?
-    let type: String
-    let weightKg: String
-    let height: String
+    var type: String
+    var weightKg: String
+    var height: String
     
     init?(from pokemonDetailsAPI: PokemonDetailsAPI, by pokemonURLString: String) {
         guard let idString = pokemonURLString.dropLast(1).components(separatedBy: "/").last,
@@ -22,6 +25,7 @@ struct PokemonDetails: Codable {
         else {
             return nil
         }
+        self.url = pokemonURLString
         self.id = id
         self.name = pokemonDetailsAPI.name.capitalized
         self.imageURLString = pokemonDetailsAPI.sprites.frontDefault

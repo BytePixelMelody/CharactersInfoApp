@@ -14,9 +14,15 @@ final class DetailModuleBuilder {
         let webService = serviceLocator.getWebService()
         let networkMonitorService = serviceLocator.getNetworkMonitorService()
         let alertService = serviceLocator.getAlertService()
-        
+        let swiftDataService = SwiftDataService()
+
         let router = DetailRouter()
-        let interactor = DetailInteractor(webService: webService, urlString: urlString)
+        let interactor = DetailInteractor(
+            webService: webService,
+            swiftDataService: swiftDataService,
+            networkMonitorService: networkMonitorService,
+            urlString: urlString
+        )
         
         let presenter = DetailPresenter(
             router: router,

@@ -13,14 +13,18 @@ final class ListModuleBuilder {
         let webService = serviceLocator.getWebService()
         let networkMonitorService = serviceLocator.getNetworkMonitorService()
         let alertService = serviceLocator.getAlertService()
+        let swiftDataService = SwiftDataService()
 
         let router = ListRouter(serviceLocator: serviceLocator)
-        let interactor = ListInteractor(webService: webService)
+        let interactor = ListInteractor(
+            webService: webService,
+            swiftDataService: swiftDataService,
+            networkMonitorService: networkMonitorService
+        )
         
         let presenter = ListPresenter(
             router: router,
             interactor: interactor,
-            networkMonitorService: networkMonitorService,
             alertService: alertService
         )
         

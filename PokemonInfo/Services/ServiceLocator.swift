@@ -9,7 +9,7 @@ protocol ServiceLocatorProtocol {
     func getWebService() -> WebServiceProtocol
     func getNetworkMonitorService() -> NetworkMonitorServiceProtocol
     func getAlertService() -> AlertServiceProtocol
-    func getCoreDataService() -> CoreDataServiceProtocol
+    func getSwiftDataService() -> SwiftDataServiceProtocol
 }
 
 // MARK: All services in one place, no shared object, only protocol-based DI
@@ -23,8 +23,9 @@ final class ServiceLocator: ServiceLocatorProtocol {
     // MARK: Initialisers
     
     init() {
-        // early call
+        // early calls
         getAlertService()
+        getSwiftDataService()
     }
 
     // MARK: Public Methods
@@ -66,14 +67,15 @@ final class ServiceLocator: ServiceLocatorProtocol {
         return service
     }
     
-    func getCoreDataService() -> CoreDataServiceProtocol {
+    @discardableResult
+    func getSwiftDataService() -> SwiftDataServiceProtocol {
         let key = #function
         // service exist
-        if let service = services[key] as? CoreDataServiceProtocol {
+        if let service = services[key] as? SwiftDataServiceProtocol {
             return service
         }
         // service not exist
-        let service = CoreDataService()
+        let service = SwiftDataService()
         services[key] = service
         return service
     }

@@ -16,7 +16,6 @@ protocol ListPresenterProtocol: AnyObject {
     func didTapPokemon(pokemon: Pokemon)
     
     // interactor calls
-    func loadedURL(_ urlString: String, nextURLString: String?)
     @MainActor func loadedPokemons(pokemons: [Pokemon]) async
     
 }
@@ -31,23 +30,17 @@ final class ListPresenter {
     
     private let router: ListRouterProtocol
     private let interactor: ListInteractorProtocol
-    private let networkMonitorService: NetworkMonitorServiceProtocol
     private let alertService: AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
     
-    private var currentURL: String? = Settings.startUrl
-    private var loadingURLs = Set<String>()
-
     // MARK: Initialisers
     
     init(router: ListRouterProtocol, 
          interactor: ListInteractorProtocol,
-         networkMonitorService: NetworkMonitorServiceProtocol,
          alertService: AlertServiceProtocol
     ) {
         self.router = router
         self.interactor = interactor
-        self.networkMonitorService = networkMonitorService
         self.alertService = alertService
     }
     
@@ -65,19 +58,13 @@ extension ListPresenter: ListPresenterProtocol {
     }
     
     func loadNextPage() {
-        // exit if no more pages or ULR is already loading
-        guard let currentURL, !loadingURLs.contains(currentURL) else { return }
-        loadingURLs.insert(currentURL)
-
         Task {
             do {
-                try networkMonitorService.checkConnection()
-                try await interactor.getPokemons(by: currentURL)
+                try await interactor.getPokemons()
             } catch {
                 logger.error("\(error.localizedDescription, privacy: .public)")
                 await catchLoadingError(error: error)
             }
-            loadingURLs.remove(currentURL)
         }
     }
     
@@ -87,11 +74,6 @@ extension ListPresenter: ListPresenterProtocol {
     }
     
     // interactor calls
-    
-    func loadedURL(_ urlString: String, nextURLString: String?) {
-        loadingURLs.remove(urlString)
-        currentURL = nextURLString
-    }
     
     @MainActor
     func loadedPokemons(pokemons: [Pokemon]) async {
@@ -118,12 +100,10 @@ extension ListPresenter: ListPresenterProtocol {
         guard let viewController = view as? UIViewController else { return }
         
         switch alertType {
-        case .noInternetConnection:
-            if networkMonitorService.internetAlertShowed == true {
-                return
-            } else {
-                networkMonitorService.internetAlertShowed = true
-            }
+        case .noInternetConnection where Settings.internetAlertShowed == true:
+            return
+        case .noInternetConnection where Settings.internetAlertShowed == false:
+            Settings.internetAlertShowed = true
         default:
             break
         }
