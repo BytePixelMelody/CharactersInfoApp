@@ -9,11 +9,14 @@ import SwiftData
 import OSLog
 
 protocol SwiftDataServiceProtocol {
-    func updateNextURL(nextURL: NextURL) async
-    func insertPokemon(pokemon: Pokemon) async
+    @MainActor func fetchNextURL() async -> NextURL?
+    @MainActor func updateNextURL(nextURL: NextURL) async
+
+    @MainActor func fetchAllPokemons() async -> [Pokemon]
+    @MainActor func insertPokemon(pokemon: Pokemon) async
     
-    func fetchAllPokemons() async -> [Pokemon]
-    func fetchNextURL() async -> NextURL?
+    @MainActor func fetchPokemonDetails(url: String) async -> PokemonDetails?
+    @MainActor func insertPokemonDetails(pokemonDetails: PokemonDetails) async
 }
 
 final class SwiftDataService: SwiftDataServiceProtocol {
@@ -42,6 +45,17 @@ final class SwiftDataService: SwiftDataServiceProtocol {
     // MARK: Public Properties
     
     @MainActor
+    func fetchNextURL() async -> NextURL? {
+        do {
+            let descriptor = FetchDescriptor<NextURL>()
+            return try context?.fetch(descriptor).last
+        } catch {
+            logger.error("\(error.localizedDescription, privacy: .public)")
+            return nil
+        }
+    }
+    
+    @MainActor
     func updateNextURL(nextURL: NextURL) async {
         do {
             let url = nextURL.url
@@ -55,6 +69,18 @@ final class SwiftDataService: SwiftDataServiceProtocol {
             }
         } catch {
             logger.error("\(error.localizedDescription, privacy: .public)")
+        }
+    }
+    
+    @MainActor
+    func fetchAllPokemons() async -> [Pokemon] {
+        guard let context else { return [] }
+        do {
+            let descriptor = FetchDescriptor<Pokemon>()
+            return try context.fetch(descriptor)
+        } catch {
+            logger.error("\(error.localizedDescription, privacy: .public)")
+            return []
         }
     }
     
@@ -77,28 +103,17 @@ final class SwiftDataService: SwiftDataServiceProtocol {
     }
     
     @MainActor
-    func fetchAllPokemons() async -> [Pokemon] {
-        guard let context else { return [] }
+    func fetchPokemonDetails(url: String) async -> PokemonDetails? {
         do {
-            let descriptor = FetchDescriptor<Pokemon>()
-            return try context.fetch(descriptor)
-        } catch {
-            logger.error("\(error.localizedDescription, privacy: .public)")
-            return []
-        }
-    }
-    
-    @MainActor
-    func fetchNextURL() async -> NextURL? {
-        do {
-            let descriptor = FetchDescriptor<NextURL>()
+            let predicate = #Predicate<PokemonDetails> { $0.url == url }
+            let descriptor = FetchDescriptor<PokemonDetails>(predicate: predicate)
             return try context?.fetch(descriptor).last
         } catch {
             logger.error("\(error.localizedDescription, privacy: .public)")
             return nil
         }
     }
-        
+    
     @MainActor
     func insertPokemonDetails(pokemonDetails: PokemonDetails) async {
         do {
@@ -120,18 +135,6 @@ final class SwiftDataService: SwiftDataServiceProtocol {
             }
         } catch {
             logger.error("\(error.localizedDescription, privacy: .public)")
-        }
-    }
-    
-    @MainActor
-    func fetchPokemonDetails(url: String) async -> PokemonDetails? {
-        do {
-            let predicate = #Predicate<PokemonDetails> { $0.url == url }
-            let descriptor = FetchDescriptor<PokemonDetails>(predicate: predicate)
-            return try context?.fetch(descriptor).last
-        } catch {
-            logger.error("\(error.localizedDescription, privacy: .public)")
-            return nil
         }
     }
     
