@@ -7,7 +7,7 @@
       </td>
       <td>
         <h1>Pokemon Info App</h1>
-        <p>Pokemon Info - a pet-project application with VIPER architecture that interacts with an online API with pagination. The application caches data, handles errors, supports dynamic font scaling and Dark Mode.</p>
+        <p>Pokemon Info - a pet-project application with VIPER architecture and SwiftData that interacts with an online API with pagination. The application caches data, handles errors, supports dynamic font scaling and Dark Mode.</p>
       </td>
     </tr>
   </table>
@@ -20,6 +20,7 @@
 
 ## Frameworks
 - [x] UIKit
+- [x] SwiftData
 - [x] OSLog
 - [x] Network
 
@@ -28,8 +29,8 @@
 - [x] Collection views based on snapshots
 - [x] Web service with generics
 - [x] Pagination with API requests limiter
-- [x] Network Monitor service
-- [ ] Database caching service
+- [x] Network Status Monitor service
+- [x] SwiftData caching implemented
 - [x] Errors handling with friendly user alerts
 - [x] UI by code
 - [x] Dynamic font scaling support
