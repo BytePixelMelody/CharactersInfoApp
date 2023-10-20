@@ -32,7 +32,7 @@
 - [x] Network Status Monitor service
 - [x] SwiftData caching
 - [x] Errors handling with friendly user alerts
-- [x] UI by code
+- [x] UI by code, landscape orientation support
 - [x] Dynamic font scaling support
 - [x] Dark mode support
 
