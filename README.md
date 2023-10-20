@@ -30,7 +30,7 @@
 - [x] Web service with generics
 - [x] Pagination with API requests limiter
 - [x] Network Status Monitor service
-- [x] SwiftData caching implemented
+- [x] SwiftData caching
 - [x] Errors handling with friendly user alerts
 - [x] UI by code
 - [x] Dynamic font scaling support
