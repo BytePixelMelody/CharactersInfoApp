@@ -44,7 +44,6 @@ final class DetailPresenter {
     
     private let router: DetailRouterProtocol
     private let interactor: DetailInteractorProtocol
-    private let networkMonitorService: NetworkMonitorServiceProtocol
     private let alertService: AlertServiceProtocol
     private let logger = Logger(subsystem: #file, category: "Error logger")
     
@@ -53,12 +52,10 @@ final class DetailPresenter {
     init(
         router: DetailRouterProtocol,
         interactor: DetailInteractorProtocol,
-        networkMonitorService: NetworkMonitorServiceProtocol,
         alertService: AlertServiceProtocol
     ) {
         self.router = router
         self.interactor = interactor
-        self.networkMonitorService = networkMonitorService
         self.alertService = alertService
     }
     
@@ -74,7 +71,6 @@ extension DetailPresenter: DetailPresenterProtocol {
     func viewDidLoaded() {
         Task {
             do {
-                try networkMonitorService.checkConnection()
                 try await interactor.getPokemonDetails()
             } catch {
                 logger.error("\(error.localizedDescription, privacy: .public)")
@@ -114,6 +110,8 @@ extension DetailPresenter: DetailPresenterProtocol {
         default:
             await showAlert(.dataLoadingError, message: error.localizedDescription)
         }
+        
+        logger.error("\(error.localizedDescription, privacy: .public)")
     }
     
     @MainActor

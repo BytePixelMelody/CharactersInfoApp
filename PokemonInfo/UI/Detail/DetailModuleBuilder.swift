@@ -27,7 +27,6 @@ final class DetailModuleBuilder {
         let presenter = DetailPresenter(
             router: router,
             interactor: interactor,
-            networkMonitorService: networkMonitorService,
             alertService: alertService
         )
         

@@ -93,6 +93,8 @@ extension ListPresenter: ListPresenterProtocol {
         default:
             await showAlert(.dataLoadingError, message: error.localizedDescription)
         }
+        
+        logger.error("\(error.localizedDescription, privacy: .public)")
     }
     
     @MainActor

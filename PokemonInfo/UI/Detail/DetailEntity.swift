@@ -19,13 +19,13 @@ class PokemonDetails {
     var weightKg: String
     var height: String
     
-    init?(from pokemonDetailsAPI: PokemonDetailsAPI, by pokemonURLString: String) {
-        guard let idString = pokemonURLString.dropLast(1).components(separatedBy: "/").last,
+    init?(from pokemonDetailsAPI: PokemonDetailsAPI, with url: String) {
+        guard let idString = url.dropLast(1).components(separatedBy: "/").last,
               let id = Int(idString)
         else {
             return nil
         }
-        self.url = pokemonURLString
+        self.url = url
         self.id = id
         self.name = pokemonDetailsAPI.name.capitalized
         self.imageURLString = pokemonDetailsAPI.sprites.frontDefault

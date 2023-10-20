@@ -100,12 +100,11 @@ extension ListInteractor: ListInteractorProtocol {
 
     func getPokemons() async throws {
         await initNextURLFromDB()
-        guard let currentURL = nextURL else { return }
+        guard let currentURL = nextURL, await isReadyToGetPokemons() else { return }
         
         var pokemons = await initPokemonsFromDB()
         if pokemons.isEmpty {
             try networkMonitorService.checkConnection()
-            guard await isReadyToGetPokemons() else { return }
             (nextURL, pokemons) = try await loadFromWeb(by: currentURL)
         }
         

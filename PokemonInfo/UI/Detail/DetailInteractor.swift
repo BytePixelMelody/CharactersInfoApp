@@ -6,26 +6,23 @@
 //
 
 import Foundation
+import OSLog
 
 protocol DetailInteractorProtocol: AnyObject {
-    var loadedPokemonDetails: PokemonDetails? { get }
     func getPokemonDetails() async throws
 }
 
 final class DetailInteractor {
     
     // MARK: Types
-
+    
     enum Errors: LocalizedError {
         case pokemonDetailsInitFailed(String)
-        case creatingImageDataFailed(String)
 
         var errorDescription: String? {
             switch self {
-            case .pokemonDetailsInitFailed(let urlString):
-                return "PokemonDetails init failed with id from \(urlString)"
-            case .creatingImageDataFailed(let urlString):
-                return "Failed to create Data from \(urlString)"
+            case .pokemonDetailsInitFailed(let message):
+                return "PokemonDetails init failed \(message)"
             }
         }
     }
@@ -33,14 +30,14 @@ final class DetailInteractor {
     // MARK: Public Properties
     
     weak var presenter: DetailPresenterProtocol?
-    private(set) var loadedPokemonDetails: PokemonDetails?
     
     // MARK: Private Properties
     
     private let webService: WebServiceProtocol
     private let swiftDataService: SwiftDataServiceProtocol
     private let networkMonitorService: NetworkMonitorServiceProtocol
-    private let pokemonURLString: String
+    private let logger = Logger(subsystem: #file, category: "Error logger")
+    private let pokemonDetailsURL: String
     
     // MARK: Initialisers
     
@@ -53,7 +50,7 @@ final class DetailInteractor {
         self.webService = webService
         self.swiftDataService = swiftDataService
         self.networkMonitorService = networkMonitorService
-        self.pokemonURLString = urlString
+        self.pokemonDetailsURL = urlString
     }
     
 }
@@ -65,26 +62,44 @@ extension DetailInteractor: DetailInteractorProtocol {
     // MARK: Public Methods
     
     func getPokemonDetails() async throws {
-        let pokemonDetailsAPI: PokemonDetailsAPI = try await webService.getDecodedJSON(by: pokemonURLString)
-        guard let pokemonDetails = PokemonDetails(from: pokemonDetailsAPI, by: pokemonURLString) else {
-            throw Errors.pokemonDetailsInitFailed(pokemonURLString)
+        var pokemonDetails = await swiftDataService.fetchPokemonDetails(url: pokemonDetailsURL)
+        if pokemonDetails == nil {
+            try networkMonitorService.checkConnection()
+            pokemonDetails = try await getPokemonDetailsFromWeb(by: pokemonDetailsURL)
         }
         
+        guard let pokemonDetails else { return }
         await presenter?.loadedPokemonDetails(pokemonDetails: pokemonDetails)
+                
+        var imageData = pokemonDetails.imageData
+        if imageData == nil {
+            imageData = try await getImageDataFromWeb(of: pokemonDetails)
+        }
         
-        loadedPokemonDetails = pokemonDetails
+        if let imageData {
+            await presenter?.loadedPokemonImageData(imageData: imageData)
+            pokemonDetails.imageData = imageData
+        }
         
-        try await getPokemonDetailsImage(of: pokemonDetails)
+        await swiftDataService.insertPokemonDetails(pokemonDetails: pokemonDetails)
     }
     
     // MARK: Private Methods
     
-    private func getPokemonDetailsImage(of pokemonDetails: PokemonDetails) async throws {
-        let imageData = try await webService.getRawData(by: pokemonDetails.imageURLString)
+    private func getPokemonDetailsFromWeb(by url: String) async throws -> PokemonDetails? {
+        let pokemonDetailsAPI: PokemonDetailsAPI = try await webService.getDecodedJSON(by: url)
         
-        await presenter?.loadedPokemonImageData(imageData: imageData)
+        guard let pokemonDetails = PokemonDetails(from: pokemonDetailsAPI, with: url) else {
+            let error = Errors.pokemonDetailsInitFailed(url)
+            logger.error("\(error.localizedDescription, privacy: .public)")
+            return nil
+        }
         
-        loadedPokemonDetails?.imageData = imageData
+        return pokemonDetails
+    }
+    
+    private func getImageDataFromWeb(of pokemonDetails: PokemonDetails) async throws -> Data {
+        return try await webService.getRawData(by: pokemonDetails.imageURLString)
     }
     
 }
