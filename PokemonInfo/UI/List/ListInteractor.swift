@@ -8,15 +8,16 @@ import Foundation
 
 // interactor works with data services
 protocol ListInteractorProtocol: AnyObject {
+    func setPresenter(_ presenter: ListPresenterProtocol) async
     func getPokemons() async throws
 }
 
-final class ListInteractor {
+final actor ListInteractor {
     
     // MARK: Constants
     
     private enum Constants {
-        static let loadingURLsRemoveTimeout = 3 // sec
+        static let loadingURLsRemoveTimeout = 5 // sec
     }
     
     // MARK: Types
@@ -31,47 +32,26 @@ final class ListInteractor {
             }
         }
     }
-    
-    actor LoadingURLs {
         
-        private var loadingURLs = Set<String?>() {
-            didSet {
-                if !loadingURLs.isEmpty {
-                    Task {
-                        try await Task.sleep(for: .seconds(Constants.loadingURLsRemoveTimeout))
-                        loadingURLs.removeAll()
-                    }
-                }
-            }
-        }
-        
-        func contains(_ url: String?) async -> Bool {
-            loadingURLs.contains(url)
-        }
-
-        func insert(_ url: String?) async {
-            loadingURLs.insert(url)
-        }
-        
-        func remove(_ url: String?) async {
-            loadingURLs.remove(url)
-        }
-        
-    }
-    
-    // MARK: Public Properties
-    
-    weak var presenter: ListPresenterProtocol?
-    
     // MARK: Private Properties
     
+    private weak var presenter: ListPresenterProtocol?
     private let webService: WebServiceProtocol
     private let networkMonitorService: NetworkMonitorServiceProtocol
     private let swiftDataService: SwiftDataServiceProtocol
+    
     private var nextURL: String? = Settings.startUrl
-//    private var loadingURLs = Set<String?>()
-    private let loadingURLs = LoadingURLs()
-    private var pokemonsDic: [Int: Pokemon] = [:]
+    private var loadingURLs = Set<String?>() {
+        didSet {
+            if !loadingURLs.isEmpty {
+                Task {
+                    try await Task.sleep(for: .seconds(Constants.loadingURLsRemoveTimeout))
+                    loadingURLs.removeAll()
+                }
+            }
+        }
+    }
+    private var pokemonsDic: [Int: Pokemon] = [:] // TODO: Make actor
     private var pokemons: [Pokemon] {
         return pokemonsDic
             .sorted { $0.key < $1.key }
@@ -97,10 +77,16 @@ final class ListInteractor {
 extension ListInteractor: ListInteractorProtocol {
     
     // MARK: Public Methods
+    
+    func setPresenter(_ presenter: ListPresenterProtocol) async {
+        self.presenter = presenter
+    }
 
     func getPokemons() async throws {
         await initNextURLFromDB()
-        guard let currentURL = nextURL, await isReadyToGetPokemons() else { return }
+        guard let currentURL = nextURL, await isReadyToGetPokemons() else {
+            return // Request rejected
+        }
         
         var pokemons = await initPokemonsFromDB()
         if pokemons.isEmpty {
@@ -114,8 +100,6 @@ extension ListInteractor: ListInteractorProtocol {
         
         await insertToDB(pokemons: pokemons)
         await updateInDB(nextURL: nextURL)
-        
-        await loadingURLs.remove(currentURL)
     }
     
     // MARK: Private Methods
@@ -127,12 +111,7 @@ extension ListInteractor: ListInteractorProtocol {
     
     
     private func isReadyToGetPokemons() async -> Bool {
-        if await loadingURLs.contains(nextURL) {
-            return false
-        } else {
-            await loadingURLs.insert(nextURL)
-            return true
-        }
+        return loadingURLs.insert(nextURL).inserted
     }
 
     private func initPokemonsFromDB() async -> [Pokemon] {
