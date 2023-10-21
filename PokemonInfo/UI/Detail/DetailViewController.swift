@@ -8,8 +8,8 @@
 import UIKit
 
 protocol DetailViewProtocol: AnyObject {
-    func showDetails(name: String, type: String, weightKg: String, height: String)
-    func showDetailsImage(image: UIImage?)
+    func showDetails(name: String, imageData: Data?, type: String, weightKg: String, height: String)
+    func showDetailsImage(imageData: Data?)
 }
 
 final class DetailViewController: UIViewController {
@@ -128,15 +128,19 @@ extension DetailViewController: DetailViewProtocol {
     
     // MARK: Public Methods
     
-    func showDetails(name: String, type: String, weightKg: String, height: String) {
+    func showDetails(name: String, imageData: Data?, type: String, weightKg: String, height: String) {
         nameLabel.text = Constants.namePrefix + name
+        if let imageData {
+            imageView.image = UIImage(data: imageData)
+        }
         typeLabel.text = Constants.typePrefix + type
         weightLabel.text = Constants.weightPrefix + weightKg + Constants.weightSuffix
         heightLabel.text = Constants.heightMeasurePrefix + height + Constants.heightMeasureSuffix
     }  
     
-    func showDetailsImage(image: UIImage?) {
-        imageView.image = image
+    func showDetailsImage(imageData: Data?) {
+        guard let imageData else { return }
+        imageView.image = UIImage(data: imageData)
     }
     
 }

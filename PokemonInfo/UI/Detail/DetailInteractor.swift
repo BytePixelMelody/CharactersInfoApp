@@ -69,16 +69,14 @@ extension DetailInteractor: DetailInteractorProtocol {
         }
         
         guard let pokemonDetails else { return }
-        await presenter?.loadedPokemonDetails(pokemonDetails: pokemonDetails)
-                
-        var imageData = pokemonDetails.imageData
-        if imageData == nil {
-            imageData = try await getImageDataFromWeb(of: pokemonDetails)
-        }
-        
-        if let imageData {
+
+        if pokemonDetails.imageData == nil {
+            await presenter?.loadedPokemonDetails(pokemonDetails: pokemonDetails)
+            let imageData = try await getImageDataFromWeb(of: pokemonDetails)
             await presenter?.loadedPokemonImageData(imageData: imageData)
             pokemonDetails.imageData = imageData
+        } else {
+            await presenter?.loadedPokemonDetails(pokemonDetails: pokemonDetails)
         }
         
         await swiftDataService.insertPokemonDetails(pokemonDetails: pokemonDetails)
