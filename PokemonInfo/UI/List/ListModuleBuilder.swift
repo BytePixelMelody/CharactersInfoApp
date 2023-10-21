@@ -33,7 +33,10 @@ final class ListModuleBuilder {
         presenter.view = viewController
         router.viewController = viewController
         
-        interactor.presenter = presenter
+        Task {
+            await interactor.setPresenter(presenter)
+        }
+        
         viewController.presenter = presenter
         
         return viewController

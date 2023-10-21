@@ -85,6 +85,7 @@ extension DetailPresenter: DetailPresenterProtocol {
     func loadedPokemonDetails(pokemonDetails: PokemonDetails) async {
         view?.showDetails(
             name: pokemonDetails.name,
+            imageData: pokemonDetails.imageData,
             type: pokemonDetails.type,
             weightKg: pokemonDetails.weightKg,
             height: pokemonDetails.height
@@ -93,8 +94,7 @@ extension DetailPresenter: DetailPresenterProtocol {
     
     @MainActor
     func loadedPokemonImageData(imageData: Data) async {
-        let image = UIImage(data: imageData)
-        view?.showDetailsImage(image: image)
+        view?.showDetailsImage(imageData: imageData)
     }
     
     // MARK: Private Methods

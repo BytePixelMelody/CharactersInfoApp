@@ -38,7 +38,7 @@ final class WebService: WebServiceProtocol {
     
     // MARK: Private Properties
     
-    let urlSession = {
+    private let urlSession = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = Constants.timeoutIntervalForRequest
         return URLSession(configuration: configuration)

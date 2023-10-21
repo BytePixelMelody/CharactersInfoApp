@@ -25,15 +25,15 @@
 - [x] Network
 
 ## Technologies
-- [x] Multithreading: Async/await, Task, @MainActor
+- [x] Multithreading: Async/await, Task, @MainActor, actor
 - [x] Collection views based on snapshots
 - [x] Web service with generics
 - [x] Pagination with API requests limiter
 - [x] Network Status Monitor service
 - [x] SwiftData caching
-- [x] Errors handling with friendly user alerts
+- [x] Errors handling with user alerts
 - [x] UI by code, landscape orientation support
-- [x] Dynamic font scaling support
+- [x] Dynamic font scaling
 - [x] Dark mode support
 
 ## Code patterns
@@ -42,12 +42,12 @@
 - [x] Delegates
 
 ## Screenshots
-<img src="Media/ListScreen.png" width="273"/> <img src="Media/DetailScreen.png" width="273"/> <img src="Media/ListScreenDarkMode.png" width="273"/> <img src="Media/DetailScreenDarkMode.png" width="273"/>
+<img src="Media/ListScreenDarkMode.png" width="273"/> <img src="Media/DetailScreenDarkMode.png" width="273"/> <img src="Media/ListScreen.png" width="273"/>
 
 ## Videos
-| Standard flow | Fonts & Dark Mode | Errors |
+| Common Use | Dynamic Font | Errors |
 | :-: | :-: | :-: |
-| <video src="https://github.com/BytePixelMelody/PokemonInfo/assets/74405334/4538a547-8d3f-40e3-ad15-2a132c6d244d"/> | <video src="https://github.com/BytePixelMelody/PokemonInfo/assets/74405334/43e3e420-cb0c-4427-b7e5-f786dc81bfc7"/> | <video src="https://github.com/BytePixelMelody/PokemonInfo/assets/74405334/ac6e0550-e78d-4ca6-b695-193b37307d6a"/> |
+| <video src="https://github.com/BytePixelMelody/PokemonInfoApp/assets/74405334/6d810201-3718-49bd-b6f3-5639c6bb2727"/> | <video src="https://github.com/BytePixelMelody/PokemonInfoApp/assets/74405334/537c6744-6b1a-4109-bf69-02a09c057e7c"/> | <video src="https://github.com/BytePixelMelody/PokemonInfoApp/assets/74405334/8fec2f43-cd4c-4826-ae31-e5ce1eebc00f"/> |
 
 
 ## Contact me
