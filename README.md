@@ -3,11 +3,11 @@
   <table>
     <tr>
       <td>
-        <img src="Media/PokemonInfoAppIcon.png" alt="Pokemon Info App Icon" width="320">
+        <img src="Media/CharactersInfoAppIcon.png" alt="Characters Info App Icon" width="320">
       </td>
       <td>
-        <h1>Pokemon Info App</h1>
-        <p>Pokemon Info - a pet-project application with VIPER architecture and SwiftData that interacts with an online API with pagination. The application caches data, handles errors, supports dynamic font scaling and Dark Mode.</p>
+        <h1>Characters Info App</h1>
+        <p>Characters Info - a pet-project application with VIPER architecture and SwiftData that interacts with an online API with pagination. The application caches data, handles errors, supports dynamic font scaling and Dark Mode.</p>
       </td>
     </tr>
   </table>
