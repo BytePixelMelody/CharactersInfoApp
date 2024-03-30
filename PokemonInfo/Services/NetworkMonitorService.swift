@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-protocol NetworkMonitorServiceProtocol: AnyObject {
+protocol NetworkMonitorServiceProtocol {
     func checkConnection() throws
 }
 
