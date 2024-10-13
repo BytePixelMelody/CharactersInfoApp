@@ -51,7 +51,7 @@ final actor ListInteractor {
             }
         }
     }
-    private var pokemonsDic: [Int: Pokemon] = [:] // TODO: Make actor
+    private var pokemonsDic: [Int: Pokemon] = [:]
     private var pokemons: [Pokemon] {
         return pokemonsDic
             .sorted { $0.key < $1.key }
@@ -108,7 +108,6 @@ extension ListInteractor: ListInteractorProtocol {
         guard let currentURL = nextURL, currentURL == Settings.startUrl else { return }
         nextURL = await swiftDataService.fetchNextURL()?.url ?? nextURL
     }
-    
     
     private func isReadyToGetPokemons() async -> Bool {
         return loadingURLs.insert(nextURL).inserted
